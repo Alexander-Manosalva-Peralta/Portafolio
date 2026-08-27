@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Casino entre Amigos — Caja y liquidación de deudas</title>
+  <style>
+    /* Importación de fuentes */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;700&display=swap');
+
+    /* Paleta de colores inspirada en la imagen (oscuro, oro/púrpura) */
+    :root{
+      --bg:#000000; /* Fondo negro profundo */
+      --card:#100d14; /* Color de tarjeta oscuro con un tinte púrpura */
+      --accent:#F2CD67; /* Dorado brillante */
+      --accent-secondary:#7C4D9A; /* Púrpura de acento */
+      --muted:#A9A9A9; /* Gris suave */
+      --danger:#F94144;
+      --light:#ffffff;
+      --chip-red:#e63946;
+      --chip-green:#06d6a0;
+      --chip-blue:#118ab2;
+      --chip-gold:#ffd166;
+    }
+
+    /* Reset y cuerpo */
+    *{box-sizing:border-box;}
+    body{
+      font-family:'Inter',sans-serif;
+      margin:0;
+      min-height:100vh;
+      /* Degradado radial que se desvanece a negro profundo */
+      background: radial-gradient(circle at 50% 10%, #150020 0%, #000000 100%);
+      color:var(--light);
+      padding:28px;
+      overflow-x:hidden;
+    }
+
+    /* Fondo de textura tenue */
+    body::before{
+      content:"";
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      /* Usando una imagen que simule algo de textura premium */
+      background:url('https://cdn.pixabay.com/photo/2017/08/10/06/33/abstract-2616235_1280.jpg') center/cover no-repeat;
+      opacity:0.05; /* Más sutil */
+      z-index:-1;
+    }
+
+    /* Estructura principal */
+    .wrap{max-width:1150px;margin:0 auto;position:relative;}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:10px;}
+    h1{
+      margin:0;
+      font-size:2.2rem;
+      font-family:'Playfair Display',serif;
+      color:var(--accent);
+      /* Estilo de texto premium */
+      text-shadow:0 0 10px rgba(242,205,103,0.5), 0 0 2px rgba(255,255,255,0.7);
+      letter-spacing:1.5px;
+    }
+    .subtitle{color:var(--muted);font-size:1rem;margin-top:4px;}
+
+    /* Hero visual grande (estilo "crypto slots") */
+    .hero{
+      margin: 12px 0 20px 0;
+      border-radius:16px;
+      overflow:hidden;
+      position:relative;
+      height:320px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .hero img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.02);
+      filter: saturate(110%) contrast(105%);
+    }
+    .hero-overlay{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.6) 60%);
+      display:flex;flex-direction:column;justify-content:flex-end;padding:20px;
+    }
+    .hero-title{
+      font-family:'Playfair Display', serif;
+      font-size:2.2rem;color:var(--light);margin:0;
+      text-shadow:0 8px 30px rgba(0,0,0,0.6);
+      letter-spacing:1px;
+    }
+    .hero-sub{color:rgba(255,255,255,0.85);margin-top:6px;font-size:0.95rem}
+
+    .grid{display:grid;grid-template-columns:1fr 400px;gap:24px;}
+
+    /* Tarjetas - Estilo flotante y premium (se mantienen exactamente) */
+    .card{
+      background:var(--card);
+      /* Degradado sutil para dar volumen */
+      background:linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.5));
+      border-radius:18px;
+      padding:20px;
+      border:1px solid rgba(242,205,103,0.1); /* Borde dorado tenue */
+      box-shadow:0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(124,77,154,0.15); /* Sombra intensa */
+      backdrop-filter:blur(3px);
+      transition:transform 0.3s ease;
+      position:relative; /* Para posicionar pseudo-elementos de imagen */
+      overflow:hidden; /* Para que las imágenes de fondo no se salgan */
+    }
+    .card:hover{
+      transform:translateY(-2px);
+    }
+    /* Estilo para las imágenes de fondo en las tarjetas */
+    .card::before{
+      content:"";
+      position:absolute;
+      top:0;left:0;right:0;bottom:0;
+      background-size:cover;
+      background-position:center;
+      opacity:0.08; /* Muy sutil */
+      z-index:-1;
+      filter:grayscale(100%); /* Desaturar para no distraer */
+      transform:scale(1.05); /* Ligeramente más grande para que los bordes no corten */
+    }
+
+    /* Imágenes de casino específicas por tarjeta */
+    .card.player-card::before{
+      background-image:url('https://cdn.pixabay.com/photo/2016/04/01/09/17/poker-1300526_1280.jpg'); /* Cartas de póker */
+    }
+    .card.game-card::before{
+      background-image:url('https://cdn.pixabay.com/photo/2017/02/08/07/26/roulette-2048598_1280.jpg'); /* Ruleta */
+    }
+    .card.balance-card::before{
+      background-image:url('https://cdn.pixabay.com/photo/2017/07/11/17/14/roulette-2495619_1280.jpg'); /* Fichas de casino */
+    }
+    .card.history-card::before{
+      background-image:url('https://cdn.pixabay.com/photo/2016/09/16/20/46/dice-1674488_1280.jpg'); /* Dados */
+    }
+    .card.summary-card::before{
+      background-image:url('https://cdn.pixabay.com/photo/2018/02/10/21/28/coins-3145437_1280.jpg'); /* Monedas */
+    }
+    .card.leaderboard-card::before{
+      background-image:url('https://cdn.pixabay.com/photo/2017/08/21/00/35/gold-2663952_1280.jpg'); /* Oro, lujo */
+    }
+
+    h3{
+      margin-top:0;
+      color:var(--accent-secondary);
+      letter-spacing:1px;
+      font-size:1.4rem;
+      font-family:'Playfair Display',serif;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      padding-bottom:10px;
+      margin-bottom:15px;
+      position:relative; /* Para que el texto esté por encima de la imagen de fondo */
+    }
+
+    /* Formularios y entradas */
+    label{display:block;font-size:0.9rem;margin-bottom:6px;color:var(--accent);}
+    input[type=text], input[type=number], select{
+      width:100%;padding:12px;border-radius:10px;border:1px solid rgba(242,205,103,0.2);
+      background:rgba(0,0,0,0.5);color:#fff;font-size:1rem;
+      transition:border-color 0.3s ease;
+    }
+    input[type=text]:focus, input[type=number]:focus, select:focus{
+      outline:none;
+      border-color:var(--accent);
+      box-shadow:0 0 8px rgba(242,205,103,0.5);
+    }
+    .row{display:flex;gap:10px;flex-wrap:wrap;}
+
+    /* Botones */
+    button{
+      padding:12px 18px;
+      border-radius:12px;
+      border:0;
+      background:var(--accent);
+      color:var(--card); /* Texto oscuro en botón claro */
+      font-weight:700;
+      cursor:pointer;
+      transition:transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+    }
+    button:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 15px var(--accent);
+      background:var(--chip-gold);
+    }
+    button.ghost{
+      background:transparent;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.15);
+      box-shadow:none;
+    }
+    button.ghost:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,0.05);
+      color:var(--light);
+      box-shadow:0 0 10px rgba(255,255,255,0.1);
+    }
+    button.warn{background:var(--danger);color:#fff;}
+    button.warn:hover{box-shadow:0 0 15px var(--danger);}
+
+    /* Tablas */
+    table{width:100%;border-collapse:collapse;margin-top:10px;}
+    th,td{padding:12px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.08);font-size:0.95rem;}
+    th{color:var(--accent-secondary);font-weight:700;text-transform:uppercase;}
+    .balance{font-weight:800;letter-spacing:0.5px;}
+    .plus{color:#54e76c;} /* Verde vibrante */
+    .minus{color:#ff6b6b;} /* Rojo vibrante */
+    .small{font-size:0.85rem;color:var(--muted);}
+    .history{max-height:300px;overflow-y:auto;}
+    /* Estilo de scrollbar para historial */
+    .history::-webkit-scrollbar { width: 8px; }
+    .history::-webkit-scrollbar-thumb { background-color: rgba(242,205,103,0.3); border-radius: 4px; }
+    .history::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+
+    /* Resumen */
+    .summary{display:flex;flex-direction:column;gap:10px;}
+    .pill{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px;border-radius:10px;
+      background:linear-gradient(90deg,rgba(242,205,103,0.1),rgba(0,0,0,0.3));
+      border:1px solid rgba(242,205,103,0.2);
+    }
+    .leader{
+      font-size:1.1rem;
+      font-weight:800;
+      color:var(--accent);
+      text-shadow:0 0 8px rgba(255,215,102,0.8);
+    }
+    .leaderboard{display:flex;flex-direction:column;gap:10px;}
+    .player-line{
+      display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:10px;
+      background:rgba(255,255,255,0.05);
+      border-left:4px solid var(--accent-secondary);
+    }
+    .settlement{margin-top:15px;padding-top:15px;border-top:1px solid rgba(255,255,255,0.05);}
+    .settlement ul{padding-left:20px;margin:10px 0;list-style-type: '⚡ ';}
+    .settlement li{margin-bottom:8px;line-height:1.4;}
+
+    /* Animación de chips de casino */
+    .chip{
+      position:fixed; /* Cambiado a fixed para que se mantenga en el viewport */
+      width:80px;height:80px;
+      border-radius:50%;
+      /* Degradado de chip más realista */
+      background:radial-gradient(circle at 30% 30%, var(--chip-gold) 10%, var(--accent-secondary) 40%, #111 100%);
+      box-shadow:0 0 20px rgba(242,205,103,0.3);
+      animation:float 12s linear infinite; /* Animación más lenta */
+      opacity:0.2;
+      z-index:-2; /* Detrás del fondo del cuerpo */
+    }
+    .chip:nth-child(2) { animation-delay: 3s; background:radial-gradient(circle at 30% 30%, var(--chip-blue) 10%, var(--chip-red) 40%, #111 100%); }
+    .chip:nth-child(3) { animation-delay: 6s; background:radial-gradient(circle at 30% 30%, var(--chip-green) 10%, var(--chip-gold) 40%, #111 100%); }
+    .chip:nth-child(4) { animation-delay: 9s; background:radial-gradient(circle at 30% 30%, var(--chip-red) 10%, var(--chip-blue) 40%, #111 100%); }
+    @keyframes float{
+      0% { transform:translateY(0) translateX(0) rotate(0deg); opacity:0.1; }
+      50% { transform:translateY(-100px) translateX(20px) rotate(180deg); opacity:0.25; }
+      100% { transform:translateY(0) translateX(0) rotate(360deg); opacity:0.1; }
+    }
+
+    /* Media Queries para responsividad */
+    @media(max-width:980px){
+      .grid{grid-template-columns:1fr;}
+      body{padding:15px;}
+      .wrap{padding:0;}
+      header{flex-direction:column;align-items:flex-start;}
+      h1{font-size:1.8rem;}
+      .small{margin-top:5px;}
+      .hero{height:220px;}
+    }
+    @media(max-width:500px){
+      .row{flex-direction:column;}
+      .row input, .row button{width:100% !important;}
+      .card{padding:15px;}
+      .hero{height:180px;}
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style/main.css">
+  <style>
+    /* Ajuste del botón volver para que combine con la paleta dorada de este proyecto */
+    .btn-back:hover { background: rgba(242,205,103,0.16); border-color: rgba(242,205,103,0.5); }
+  </style>
+</head>
+<body>
+  <a href="../projects.html" class="btn-back" data-go-back>
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l4.88-4.88L11.29 4.7 3.29 12.7l8 8 1.42-1.42L7.83 13H20z"/></svg>
+    Volver a proyectos
+  </a>
+  <!-- chips decorativos -->
+  <div class="chip" style="top:20%;left:5%;"></div>
+  <div class="chip" style="top:40%;left:90%;"></div>
+  <div class="chip" style="top:70%;left:50%;"></div>
+  <div class="chip" style="top:85%;left:20%;"></div>
+
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Casino entre amigos — Caja y liquidación de deudas</h1>
+        <div class="subtitle">Agrega jugadores, registra partidas y liquida las deudas automáticamente.</div>
+      </div>
+      <div class="small">Guardado en <strong>localStorage</strong> — tus datos persisten en este navegador</div>
+    </header>
+
+    <!-- Hero visual: imagen grande (usa la imagen subida por ti en el contenedor).
+         Si la subes a tu repo, ponla en assets/hero.jpg y cambia src accordingly. -->
+    <div class="hero">
+      <<img src="assets/img/fondo17.jpg" alt="Crypto slots hero">
+      <div class="hero-overlay">
+        <div style="max-width:900px">
+          <h2 class="hero-title">crypto slots — estilo premium</h2>
+          <div class="hero-sub">Interfaz oscura, lujo dorado y elementos visuales para dar sensación de casino profesional.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <div class="card player-card">
+          <h3>Agregar participante</h3>
+          <label>Nombre</label>
+          <div class="row">
+            <input id="newName" type="text" placeholder="Ej: Anita" />
+            <input id="newBalance" type="number" step="0.01" placeholder="Saldo inicial (opcional)" style="width:140px" />
+            <button id="addBtn" type="button">Agregar</button>
+          </div>
+          <div class="small" style="margin-top:8px">Puedes añadir o eliminar jugadores. Por defecto el saldo inicial es 0.</div>
+        </div>
+
+        <div class="card game-card" style="margin-top:24px">
+          <h3>Registrar partida / apuesta</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px">
+            <div>
+              <label>Quien pierde</label>
+              <select id="loserSelect"></select>
+            </div>
+            <div>
+              <label>Quien gana</label>
+              <select id="winnerSelect"></select>
+            </div>
+            <div>
+              <label>Monto (S/.)</label>
+              <input id="amountInput" type="number" step="0.01" placeholder="Ej: 20" />
+            </div>
+            <div>
+              <label>Comentario (opcional)</label>
+              <input id="noteInput" type="text" placeholder="Ej: mano 3" />
+            </div>
+          </div>
+          <div style="margin-top:15px" class="row">
+            <button id="registerBtn" type="button">Registrar</button>
+            <button id="undoBtn" type="button" class="ghost">Deshacer último</button>
+            <button id="clearHistoryBtn" type="button" class="ghost">Limpiar historial</button>
+          </div>
+        </div>
+
+        <div class="card balance-card" style="margin-top:24px">
+          <h3>Participantes y saldos</h3>
+          <table id="playersTable">
+            <thead>
+              <tr><th>Nombre</th><th>Saldo</th><th>Acciones</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="card history-card" style="margin-top:24px">
+          <h3>Historial</h3>
+          <div class="row" style="margin-bottom:12px">
+            <input id="searchHistory" type="text" placeholder="Buscar en historial (nombre, nota)" />
+            <button id="exportBtn" class="ghost" type="button">Exportar CSV</button>
+            <button id="exportStateBtn" class="ghost" type="button">Descargar estado (JSON)</button>
+            <input id="importStateFile" type="file" accept="application/json" style="display:none" />
+            <button id="importStateBtn" class="ghost" type="button">Cargar estado (JSON)</button>
+          </div>
+          <div class="history">
+            <table id="historyTable">
+              <thead><tr><th>Fecha / Hora</th><th>Detalle</th><th>Monto</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card summary-card">
+          <h3>Resumen rápido</h3>
+          <div class="summary" id="summaryBox"></div>
+          <div style="margin-top:15px" class="small">Aquí verás en tiempo real quién tiene más dinero y el total combinado.</div>
+        </div>
+
+        <div class="card leaderboard-card" style="margin-top:24px">
+          <h3>Leaderboard</h3>
+          <div class="leaderboard" id="leaderboardBox"></div>
+          <div style="margin-top:15px">
+            <button id="settleBtn" type="button" class="ghost">Calcular liquidación de deudas</button>
+            <div class="settlement" id="settlementBox"></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'casino_amigos_v3';
+    let players = [];
+    let history = [];
+
+    // DOM
+    const playersTableBody = document.querySelector('#playersTable tbody');
+    const loserSelect = document.getElementById('loserSelect');
+    const winnerSelect = document.getElementById('winnerSelect');
+    const amountInput = document.getElementById('amountInput');
+    const noteInput = document.getElementById('noteInput');
+    const addBtn = document.getElementById('addBtn');
+    const newName = document.getElementById('newName');
+    const newBalance = document.getElementById('newBalance');
+    const registerBtn = document.getElementById('registerBtn');
+    const historyTableBody = document.querySelector('#historyTable tbody');
+    const undoBtn = document.getElementById('undoBtn');
+    const summaryBox = document.getElementById('summaryBox');
+    const leaderboardBox = document.getElementById('leaderboardBox');
+    const exportBtn = document.getElementById('exportBtn');
+    const searchHistory = document.getElementById('searchHistory');
+    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+    const settleBtn = document.getElementById('settleBtn');
+    const settlementBox = document.getElementById('settlementBox');
+    const exportStateBtn = document.getElementById('exportStateBtn');
+    const importStateBtn = document.getElementById('importStateBtn');
+    const importStateFile = document.getElementById('importStateFile');
+
+    // helpers
+    const uid = ()=>Math.random().toString(36).slice(2,9);
+    function save(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify({players,history})); }catch(e){ console.warn('save failed', e); } }
+    function load(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return;
+        const obj = JSON.parse(raw || '{}');
+        players = Array.isArray(obj.players) ? obj.players : [];
+        history = Array.isArray(obj.history) ? obj.history : [];
+      }catch(e){console.warn('load failed',e); players = []; history = [];}
+    }
+
+    function addPlayer(name, balance=0){
+      if(!name) return {ok:false,msg:'Nombre vacío'};
+      if(players.find(p=>p.name && p.name.toLowerCase()===name.toLowerCase())) return {ok:false,msg:'Nombre ya existe'};
+      players.push({id:uid(),name:name.trim(),balance:Number(balance||0)});
+      save(); renderAll(); return {ok:true};
+    }
+
+    function updateSelects(){
+      [loserSelect,winnerSelect].forEach(sel=>{
+        sel.innerHTML='';
+        players.forEach(p=>{
+          const o=document.createElement('option');
+          o.value=p.id;
+          o.textContent=p.name + ' (S/. '+Number(p.balance).toFixed(2)+')';
+          sel.appendChild(o);
+        })
+      })
+    }
+
+    function renderPlayers(){
+      playersTableBody.innerHTML='';
+      players.forEach(p=>{
+        const tr=document.createElement('tr');
+        const balanceHtml = p.balance>=0
+          ? `<span class="plus">S/. ${Number(p.balance).toFixed(2)}</span>`
+          : `<span class="minus">S/. ${Number(p.balance).toFixed(2)}</span>`;
+        tr.innerHTML =
+          `<td>${escapeHtml(p.name)}</td>
+          <td class="balance">${balanceHtml}</td>
+          <td>
+            <button class="ghost small" onclick="window.editPlayer('${p.id}')" type="button">Editar</button>
+            <button class="ghost small" onclick="window.removePlayer('${p.id}')" type="button">Eliminar</button>
+          </td>`;
+        playersTableBody.appendChild(tr);
+      })
+    }
+
+    function findPlayer(pid){ return players.find(p=>p.id===pid); }
+
+    function registerTransaction(loserId,winnerId,amount,note){
+      const loser=findPlayer(loserId), winner=findPlayer(winnerId);
+      amount = Number(amount);
+      if(!loser || !winner) return {ok:false,msg:'Jugador no encontrado'};
+      if(loserId===winnerId) return {ok:false,msg:'El ganador y perdedor no pueden ser la misma persona'};
+      if(isNaN(amount) || amount<=0) return {ok:false,msg:'Monto inválido'};
+
+      // actualizar saldos
+      loser.balance = Number((loser.balance - amount).toFixed(2));
+      winner.balance = Number((winner.balance + amount).toFixed(2));
+
+      // registrar transacción en historial (perdedor -> ganador)
+      const tx = {id:uid(),time:new Date().toISOString(),loser:loser.id,winner:winner.id,amount:Number(amount.toFixed(2)),note:note?String(note):''};
+      history.unshift(tx);
+      save(); renderAll();
+      return {ok:true,tx};
+    }
+
+    function undoLast(){
+      if(history.length===0) return false;
+      const tx = history.shift();
+      const loser=findPlayer(tx.loser), winner=findPlayer(tx.winner);
+      if(loser) loser.balance = Number((loser.balance + tx.amount).toFixed(2));
+      if(winner) winner.balance = Number((winner.balance - tx.amount).toFixed(2));
+      save(); renderAll();
+      return true;
+    }
+
+    function clearHistory(){
+      if(!confirm('Eliminar todo el historial?')) return;
+      history=[]; save(); renderAll();
+    }
+
+    function renderHistory(filter=''){
+      historyTableBody.innerHTML='';
+      const list = history.filter(h=>{
+        const w = (findPlayer(h.winner)?.name||'');
+        const l = (findPlayer(h.loser)?.name||'');
+        return (w + l + (h.note||'') + (h.time||'')).toLowerCase().includes((filter||'').toLowerCase());
+      });
+      list.forEach(h=>{
+        const tr=document.createElement('tr');
+        const time = new Date(h.time).toLocaleString();
+        const winner = escapeHtml(findPlayer(h.winner)?.name||'??');
+        const loser = escapeHtml(findPlayer(h.loser)?.name||'??');
+        tr.innerHTML = `<td class="small">${time}</td><td>${winner} ganó a ${loser}${h.note? ' — '+escapeHtml(h.note):''}</td><td><span class="${h.amount>=0?'plus':'minus'}">S/. ${Number(h.amount).toFixed(2)}</span></td>`;
+        historyTableBody.appendChild(tr);
+      })
+    }
+
+    function renderSummary(){
+      const total = players.reduce((s,p)=>s + Number(p.balance||0),0);
+      const sorted = [...players].sort((a,b)=>Number(b.balance||0)-Number(a.balance||0));
+      const leader = sorted.length ? sorted[0] : null;
+      const worst = sorted.length ? sorted[sorted.length-1] : null;
+      summaryBox.innerHTML='';
+
+      const pTotal = document.createElement('div'); pTotal.className='pill';
+      pTotal.innerHTML = `<div class="small">Total combinado</div><div><strong class="${total>=0?'plus':'minus'}">S/. ${Number(total).toFixed(2)}</strong></div>`;
+      summaryBox.appendChild(pTotal);
+
+      const pLeader = document.createElement('div'); pLeader.className='pill';
+      pLeader.innerHTML = `<div class="small">Líder</div><div class="leader">${leader? escapeHtml(leader.name) + ' — S/. ' + Number(leader.balance).toFixed(2) : '—'}</div>`;
+      summaryBox.appendChild(pLeader);
+
+      const pWorst = document.createElement('div'); pWorst.className='pill';
+      pWorst.innerHTML = `<div class="small">Va perdiendo</div><div class="small ${worst && worst.balance<0 ? 'minus' : ''}">${worst? escapeHtml(worst.name) + ' — S/. ' + Number(worst.balance).toFixed(2) : '—'}</div>`;
+      summaryBox.appendChild(pWorst);
+
+      const list=document.createElement('div'); list.style.marginTop='15px';
+      players.forEach(p=>{
+        const line=document.createElement('div'); line.className='player-line';
+        const balHtml = p.balance>=0 ? `<span class="plus">S/. ${Number(p.balance).toFixed(2)}</span>` : `<span class="minus">S/. ${Number(p.balance).toFixed(2)}</span>`;
+        line.innerHTML = `<div>${escapeHtml(p.name)}</div><div class="balance">${balHtml}</div>`;
+        list.appendChild(line);
+      });
+      summaryBox.appendChild(list);
+    }
+
+    function renderLeaderboard(){
+      leaderboardBox.innerHTML='';
+      const s=[...players].sort((a,b)=>Number(b.balance||0)-Number(a.balance||0));
+      s.forEach((p,idx)=>{
+        const el=document.createElement('div'); el.className='player-line';
+        const balHtml = p.balance>=0 ? `<span class="plus">S/. ${Number(p.balance).toFixed(2)}</span>` : `<span class="minus">S/. ${Number(p.balance).toFixed(2)}</span>`;
+        el.innerHTML = `<div>#${idx+1} ${escapeHtml(p.name)}</div><div>${balHtml}</div>`;
+        leaderboardBox.appendChild(el);
+      })
+    }
+
+    function renderAll(){
+      updateSelects();
+      renderPlayers();
+      renderHistory(searchHistory.value||'');
+      renderSummary();
+      renderLeaderboard();
+      settlementBox.innerHTML='';
+    }
+
+    function escapeHtml(str){
+      return String(str || '').replace(/[&<>"']/g, s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+    }
+
+    window.editPlayer = function(pid){
+      const p = findPlayer(pid); if(!p) return;
+      const nb = prompt('Nuevo saldo para '+p.name, p.balance);
+      if(nb===null) return;
+      const val = Number(nb);
+      if(isNaN(val)) return alert('Saldo inválido');
+      p.balance = Number(val.toFixed(2)); save(); renderAll();
+    }
+
+    window.removePlayer = function(pid){
+      const p=findPlayer(pid); if(!p) return;
+      if(!confirm('Eliminar a '+p.name+'? Esto también quitará sus movimientos del historial.')) return;
+      players = players.filter(x=>x.id!==pid);
+      history = history.filter(h=>h.loser!==pid && h.winner!==pid);
+      save(); renderAll();
+    }
+
+    // settlement algorithm: calculate direct pairwise debts using the history only (no indirect redistribution)
+    function calculateSettlement(){
+      // Build map of direct debts from history: key = "from||to" (loser name -> winner name)
+      const pairSums = {}; // { "A||B": amount }
+
+      // iterate over history and sum amounts for direct relations
+      // history stores tx objects with loser (id), winner (id), amount (number)
+      history.forEach(tx => {
+        const fromName = findPlayer(tx.loser)?.name || tx.loser; // fallback to id if player removed
+        const toName = findPlayer(tx.winner)?.name || tx.winner;
+        if(!fromName || !toName) return;
+        const key = `${fromName}||${toName}`;
+        pairSums[key] = (pairSums[key] || 0) + Number(tx.amount || 0);
+      });
+
+      // Now net out reciprocal debts between the same pair (A->B vs B->A) so only direct net remains.
+      const processed = new Set();
+      const transfers = [];
+
+      Object.keys(pairSums).forEach(key => {
+        if(processed.has(key)) return;
+        const [a, b] = key.split('||');
+        const revKey = `${b}||${a}`;
+        const aToB = pairSums[key] || 0;
+        const bToA = pairSums[revKey] || 0;
+
+        if(aToB === bToA){
+          // fully cancel each other — nothing to push
+        } else if(aToB > bToA){
+          transfers.push({ from: a, to: b, amount: Number((aToB - bToA).toFixed(2)) });
+        } else {
+          transfers.push({ from: b, to: a, amount: Number((bToA - aToB).toFixed(2)) });
+        }
+
+        processed.add(key);
+        processed.add(revKey);
+      });
+
+      // Sort transfers optionally for consistent output: by from then to
+      transfers.sort((x,y)=>{
+        if(x.from < y.from) return -1;
+        if(x.from > y.from) return 1;
+        if(x.to < y.to) return -1;
+        if(x.to > y.to) return 1;
+        return y.amount - x.amount;
+      });
+
+      return transfers;
+    }
+
+    function showSettlement(){
+      const transfers = calculateSettlement();
+      settlementBox.innerHTML='';
+      if(transfers.length===0){
+        settlementBox.innerHTML='<div class="small">No hay deudas directas entre participantes (según el historial), o todas se han cancelado mutuamente.</div>';
+        return;
+      }
+      const ul=document.createElement('ul');
+      transfers.forEach(t=>{
+        const li=document.createElement('li');
+        li.textContent = `${t.from} → ${t.to}: S/. ${Number(t.amount).toFixed(2)}`;
+        ul.appendChild(li);
+      });
+      settlementBox.appendChild(ul);
+    }
+
+    // CSV export
+    function csvEscape(val){
+      const s = String(val === undefined || val === null ? '' : val);
+      return `"${s.replace(/"/g,'""')}"`;
+    }
+
+    function exportCSV(){
+      const rows = [];
+      rows.push(['Fecha','Winner','Loser','Monto','Nota'].map(csvEscape).join(','));
+      // reverse chronological -> chronological optional; you used .slice().reverse() before, keep reverse to earliest-first:
+      history.slice().reverse().forEach(h=>{
+        const t = new Date(h.time).toLocaleString();
+        const w = findPlayer(h.winner)?.name || h.winner || '';
+        const l = findPlayer(h.loser)?.name || h.loser || '';
+        rows.push([t, w, l, Number(h.amount).toFixed(2), h.note || ''].map(csvEscape).join(','));
+      });
+      const blob = new Blob([rows.join('\n')], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'casino_historial.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+
+    // export/import state JSON
+    function exportState(){
+      const blob = new Blob([JSON.stringify({players,history},null,2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'casino_state.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+    function importStateFileHandler(file){
+      const reader = new FileReader();
+      reader.onload = ()=>{
+        try{
+          const obj = JSON.parse(reader.result);
+          if(!obj || !Array.isArray(obj.players) || !Array.isArray(obj.history)) return alert('JSON inválido');
+          players = obj.players; history = obj.history; save(); renderAll(); alert('Estado cargado correctamente');
+        }catch(e){ alert('Error al leer archivo JSON'); }
+      };
+      reader.readAsText(file);
+    }
+
+    // handlers wiring
+    addBtn.addEventListener('click', ()=>{
+      const name = newName.value.trim();
+      const bal = newBalance.value ? Number(newBalance.value) : 0;
+      const res = addPlayer(name, bal);
+      if(!res.ok) return alert(res.msg);
+      newName.value=''; newBalance.value='';
+    });
+
+    registerBtn.addEventListener('click', ()=>{
+      if(players.length<2) return alert('Necesitas al menos 2 participantes.');
+      const loserId = loserSelect.value;
+      const winnerId = winnerSelect.value;
+      const amount = amountInput.value;
+      const note = noteInput.value;
+      const res = registerTransaction(loserId,winnerId,amount,note);
+      if(!res.ok) return alert(res.msg);
+      amountInput.value=''; noteInput.value='';
+    });
+
+    undoBtn.addEventListener('click', ()=>{ if(!undoLast()) alert('No hay transacciones para deshacer'); });
+    exportBtn.addEventListener('click', exportCSV);
+    clearHistoryBtn.addEventListener('click', clearHistory);
+    settleBtn.addEventListener('click', showSettlement);
+    exportStateBtn.addEventListener('click', exportState);
+    importStateBtn.addEventListener('click', ()=>importStateFile.click());
+    importStateFile.addEventListener('change', (e)=>{ const f = e.target.files[0]; if(f) importStateFileHandler(f); });
+    searchHistory.addEventListener('input', ()=>renderHistory(searchHistory.value));
+
+    // init
+    load();
+    if(players.length===0){
+      addPlayer('Anita',0);
+      addPlayer('Lila',0);
+      addPlayer('Alizander',0);
+    }
+    renderAll();
+  </script>
+  <script src="../scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+/* ============================================================
+   YOJAN MANOSALVA — SISTEMA DE DISEÑO COMPARTIDO
+   Este archivo centraliza colores, tipografía, navegación,
+   botones y animaciones para que TODAS las páginas se vean
+   coherentes entre sí.
+   ============================================================ */
+
+:root {
+  --bg: #08080a;
+  --bg-soft: #0e0e11;
+  --bg-card: rgba(255, 255, 255, 0.055);
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --text: #f5f5f5;
+  --text-muted: #b7b7bd;
+  --text-dim: #8a8a92;
+  --accent: #ff5e57;
+  --accent-2: #ffa07a;
+  --accent-gradient: linear-gradient(90deg, var(--accent), var(--accent-2));
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --nav-height: 84px;
+  --ease: cubic-bezier(.22, .9, .35, 1);
+  --transition-fast: .18s var(--ease);
+  --transition: .35s var(--ease);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+a { color: inherit; }
+
+img { max-width: 100%; display: block; }
+
+::selection { background: var(--accent); color: #fff; }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--accent), #7a1a16); border-radius: 10px; }
+
+.section-eyebrow {
+  display: inline-block;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .8rem;
+}
+
+/* ============================== NAVBAR ============================== */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  padding: 1.1rem clamp(1.2rem, 5vw, 4rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(12, 12, 14, 0.35);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 100;
+  transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.site-nav.is-scrolled {
+  background: rgba(14, 14, 16, 0.72);
+  border-bottom-color: var(--border-strong);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
+}
+
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  text-decoration: none;
+  position: relative;
+}
+
+.nav-brand img {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2.6rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #e8e8e8;
+  font-weight: 500;
+  font-size: 1rem;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color var(--transition-fast);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 50%; bottom: 0;
+  width: 0%; height: 2px;
+  background: var(--accent-gradient);
+  border-radius: 5px;
+  transform: translateX(-50%);
+  transition: width var(--transition-fast);
+}
+
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after,
+.nav-links a.is-active::after { width: 100%; }
+.nav-links a.is-active { color: #fff; }
+
+.nav-toggle {
+  display: none;
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  position: relative;
+  z-index: 110;
+}
+
+.nav-toggle span,
+.nav-toggle::before,
+.nav-toggle::after {
+  content: '';
+  position: absolute;
+  left: 10px; right: 10px;
+  height: 2px;
+  background: #fff;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+.nav-toggle::before { top: 14px; }
+.nav-toggle span { top: 20px; }
+.nav-toggle::after { top: 26px; }
+
+.nav-toggle.is-open::before { transform: translateY(6px) rotate(45deg); }
+.nav-toggle.is-open::after { transform: translateY(-6px) rotate(-45deg); }
+.nav-toggle.is-open span { opacity: 0; }
+
+@media (max-width: 860px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    position: fixed;
+    top: 0; right: 0;
+    height: 100vh;
+    width: min(78vw, 320px);
+    background: rgba(10, 10, 12, 0.97);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2.2rem;
+    padding: 2rem 2.5rem;
+    transform: translateX(100%);
+    transition: transform var(--transition);
+    border-left: 1px solid var(--border);
+    z-index: 105;
+  }
+  .nav-links.is-open { transform: translateX(0); }
+  .nav-links a { font-size: 1.3rem; }
+}
+
+/* ============================== BOTONES ============================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  padding: .95rem 2.1rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.btn:hover {
+  background: var(--accent-gradient);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 94, 87, 0.35);
+}
+
+.btn-solid {
+  background: var(--accent-gradient);
+  border: none;
+  box-shadow: 0 8px 25px rgba(255, 94, 87, 0.25);
+}
+.btn-solid:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255, 94, 87, 0.45); }
+
+.btn-ghost {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.35);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.08); box-shadow: none; }
+
+/* Botón "volver" reutilizado en todas las páginas de proyecto */
+.btn-back {
+  position: fixed;
+  top: 1.4rem;
+  left: clamp(1rem, 4vw, 2.5rem);
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: rgba(14, 14, 16, 0.65);
+  border: 1px solid var(--border);
+  color: #fff;
+  padding: .65rem 1.1rem .65rem .85rem;
+  border-radius: 50px;
+  font-size: .92rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(14px);
+  transition: transform var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+}
+.btn-back:hover {
+  background: rgba(255, 94, 87, 0.18);
+  border-color: rgba(255, 94, 87, 0.5);
+  transform: translateX(-3px);
+}
+.btn-back svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* ============================== TARJETAS ============================== */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.glass-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-soft);
+}
+
+/* ============================== REVEAL AL HACER SCROLL ==============================
+   Cada sección puede declarar data-reveal="up|left|right|zoom|fade"
+   para variar la animación y evitar que todo se vea igual (líneas rectas).
+*/
+[data-reveal] {
+  opacity: 0;
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: transform, opacity;
+}
+
+[data-reveal="up"]    { transform: translateY(64px); }
+[data-reveal="down"]  { transform: translateY(-48px); }
+[data-reveal="left"]  { transform: translateX(-72px); }
+[data-reveal="right"] { transform: translateX(72px); }
+[data-reveal="zoom"]  { transform: scale(.82); }
+[data-reveal="fade"]  { transform: none; }
+[data-reveal="flip"]  { transform: perspective(900px) rotateX(18deg) translateY(40px); }
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { transition: opacity .4s ease; transform: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* ============================== FOOTER ============================== */
+.site-footer {
+  text-align: center;
+  padding: 3.2rem 1.5rem 2.6rem;
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border);
+}
+
+.site-footer p { color: var(--text-dim); font-size: .92rem; }
+
+.site-footer .social {
+  margin-top: 1.3rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.site-footer .social a {
+  width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  transition: all var(--transition-fast);
+}
+.site-footer .social a svg { width: 18px; height: 18px; fill: #ccc; transition: fill var(--transition-fast); }
+.site-footer .social a:hover { border-color: var(--accent); transform: translateY(-3px); }
+.site-footer .social a:hover svg { fill: var(--accent); }
+
+/* ============================== ICONOS DE HABILIDAD ============================== */
+.skill-icon {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, rgba(255,94,87,0.18), rgba(255,160,122,0.06));
+  border: 1px solid rgba(255,94,87,0.25);
+  color: var(--accent-2);
+  font-weight: 800;
+  font-size: 1.15rem;
+  font-family: 'Playfair Display', serif;
+  flex-shrink: 0;
+}
+.skill-icon svg { width: 28px; height: 28px; fill: none; stroke: var(--accent-2); stroke-width: 1.6; }
+
+/* ============================== UTILIDADES ============================== */
+.container { max-width: 1240px; margin: 0 auto; padding: 0 clamp(1.2rem, 5vw, 4rem); }
+.text-gradient {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

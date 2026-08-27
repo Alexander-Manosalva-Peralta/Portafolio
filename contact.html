@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto — Yojan Manosalva</title>
+  <meta name="description" content="Ponte en contacto con Yojan Alexander Manosalva Peralta para propuestas, colaboraciones o proyectos de desarrollo web." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/main.css">
+
+  <style>
+    body { background: #0a0a0a; }
+
+    .page-hero {
+      padding: calc(var(--nav-height) + 3.5rem) clamp(1.5rem, 6vw, 70px) 2rem;
+      text-align: center;
+    }
+    .page-hero h1 {
+      font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+      font-family: "Playfair Display", serif;
+      background: linear-gradient(90deg, #ffffff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-hero p { color: var(--text-muted); margin-top: .9rem; max-width: 560px; margin-inline: auto; }
+
+    .contact-wrap {
+      max-width: 1120px; margin: 0 auto;
+      padding: 1rem clamp(1.5rem, 6vw, 70px) 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 2.4rem;
+      align-items: start;
+    }
+
+    /* ---- Panel de información ---- */
+    .info-panel { padding: 2.2rem; }
+    .info-panel h2 { font-size: 1.3rem; margin-bottom: .6rem; }
+    .info-panel > p { color: var(--text-muted); font-size: .95rem; line-height: 1.7; margin-bottom: 1.8rem; }
+
+    .contact-methods { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+    .contact-method {
+      display: flex; align-items: center; gap: 1rem;
+      padding: .9rem 1rem;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+    .contact-method:hover { transform: translateX(6px); border-color: rgba(255,94,87,0.4); background: rgba(255,94,87,0.06); }
+    .contact-method .icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 12px;
+      background: rgba(255,94,87,0.14);
+    }
+    .contact-method .icon svg { width: 19px; height: 19px; fill: var(--accent-2); }
+    .contact-method strong { display: block; font-size: .92rem; }
+    .contact-method span { display: block; font-size: .82rem; color: var(--text-dim); }
+
+    .availability {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .88rem; color: var(--text-muted);
+      padding-top: 1.4rem; border-top: 1px solid var(--border);
+    }
+    .availability .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: #4ade80; box-shadow: 0 0 0 4px rgba(74,222,128,0.18);
+      flex-shrink: 0;
+    }
+
+    .social-row { display: flex; gap: .8rem; margin-top: 1.6rem; }
+    .social-row a {
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+      border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      transition: all var(--transition-fast);
+    }
+    .social-row a svg { width: 19px; height: 19px; fill: #ccc; transition: fill var(--transition-fast); }
+    .social-row a:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .social-row a:hover svg { fill: var(--accent); }
+
+    /* ---- Formulario ---- */
+    .form-panel { padding: 2.2rem; }
+    .form-panel h2 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+
+    .form-row { margin-bottom: 1.3rem; display: flex; flex-direction: column; gap: .5rem; }
+    .form-row.two-cols { flex-direction: row; gap: 1.2rem; }
+    .form-row.two-cols > div { flex: 1; display: flex; flex-direction: column; gap: .5rem; }
+
+    .form-row label { font-size: .85rem; font-weight: 600; color: var(--text-muted); }
+    .form-row input, .form-row textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: .85rem 1rem;
+      color: #fff;
+      font-family: inherit;
+      font-size: .95rem;
+      transition: border-color var(--transition-fast), background var(--transition-fast);
+      resize: vertical;
+    }
+    .form-row input:focus, .form-row textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255,94,87,0.05);
+    }
+
+    .form-status {
+      margin-top: 1rem; font-size: .88rem; color: var(--text-muted);
+      display: none;
+    }
+    .form-status.is-visible { display: block; }
+    .form-status.is-success { color: #4ade80; }
+
+    @media (max-width: 900px) {
+      .contact-wrap { grid-template-columns: 1fr; }
+      .form-row.two-cols { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="site-nav">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/img/perfil.png" alt="Logo de Yojan">
+      <span>Yojan</span>
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú"><span></span></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="about.html">Sobre mí</a></li>
+      <li><a href="projects.html">Proyectos</a></li>
+      <li><a href="contact.html" class="is-active">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-hero">
+    <p class="section-eyebrow" data-reveal="fade">Hablemos</p>
+    <h1 data-reveal="up" style="--reveal-delay:80ms">Construyamos algo juntos</h1>
+    <p data-reveal="up" style="--reveal-delay:160ms">¿Tienes un proyecto en mente, una propuesta o simplemente quieres conversar sobre tecnología? Escríbeme, respondo lo antes posible.</p>
+  </header>
+
+  <div class="contact-wrap">
+    <!-- INFORMACIÓN DE CONTACTO -->
+    <section class="info-panel glass-card" data-reveal="left">
+      <h2>Información de contacto</h2>
+      <p>Estas son las vías más rápidas para comunicarte conmigo. Elige la que prefieras.</p>
+
+      <div class="contact-methods">
+        <a class="contact-method" href="mailto:yojan.manosalva@upch.pe">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 13.065l-11.99-7.2v15.135c0 .552.447 1 1 1h21.98c.553 0 1-.448 1-1V5.865l-11.99 7.2zM12 11.293l11.99-7.2H.01l11.99 7.2z"/></svg></span>
+          <span><strong>Correo electrónico</strong><span>yojan.manosalva@example.com</span></span>
+        </a>
+        <a class="contact-method" href="https://wa.me/51916647305" target="_blank" rel="noopener">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 0 5.37 0 12a11.9 11.9 0 001.68 6.06L0 24l6.18-1.62A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.19-1.24-6.19-3.48-8.52zM12 22a9.9 9.9 0 01-5.05-1.39l-.36-.21-3.67.96.98-3.58-.23-.37A9.91 9.91 0 012 12C2 6.49 6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm5.3-7.48c-.29-.15-1.7-.84-1.97-.94-.26-.1-.45-.15-.64.15s-.73.94-.9 1.13-.33.22-.61.07a8.13 8.13 0 01-2.39-1.47 9.03 9.03 0 01-1.66-2.06c-.17-.29 0-.45.13-.6.14-.15.29-.33.43-.5.15-.17.19-.29.29-.48.1-.19.05-.36-.03-.51-.07-.15-.64-1.53-.88-2.09-.23-.55-.47-.47-.64-.48h-.55c-.19 0-.5.07-.76.36s-.99.96-.99 2.34.99 2.7 1.13 2.88c.14.19 1.96 2.99 4.74 4.19.66.29 1.18.46 1.59.59.67.21 1.27.18 1.75.11.53-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34z"/></svg></span>
+          <span><strong>WhatsApp</strong><span>+51 987 654 321</span></span>
+        </a>
+        <a class="contact-method" href="https://www.linkedin.com/in/yojan-alexander-manosalva-peralta-862309312/" target="_blank" rel="noopener">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M20.447 20.452H17.2V14.8c0-1.344-.026-3.072-1.873-3.072-1.874 0-2.162 1.462-2.162 2.973v5.751H9.018V9h3.116v1.561h.045c.434-.822 1.494-1.69 3.072-1.69 3.285 0 3.89 2.164 3.89 4.977v6.604zM5.337 7.433a1.804 1.804 0 110-3.608 1.804 1.804 0 010 3.608zM6.918 20.452H3.652V9h3.266v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451c.98 0 1.778-.774 1.778-1.729V1.729C24 .774 23.205 0 22.225 0z"/></svg></span>
+          <span><strong>LinkedIn</strong><span>/in/tuusuario</span></span>
+        </a>
+        <a class="contact-method" href="https://github.com/Alexander-Manosalva-Peralta" target="_blank" rel="noopener">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577v-2.02c-3.338.724-4.033-1.415-4.033-1.415-.546-1.385-1.333-1.755-1.333-1.755-1.09-.744.083-.729.083-.729 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.762-1.605-2.665-.3-5.466-1.335-5.466-5.933 0-1.31.468-2.38 1.236-3.22-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.47 11.47 0 013.003-.404c1.02.004 2.047.137 3.003.404 2.29-1.552 3.297-1.23 3.297-1.23.655 1.653.242 2.873.118 3.176.77.84 1.236 1.91 1.236 3.22 0 4.61-2.803 5.63-5.475 5.922.43.372.823 1.102.823 2.222v3.293c0 .322.218.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
+          <span><strong>GitHub</strong><span>/tuusuario</span></span>
+        </a>
+      </div>
+
+      <div class="availability">
+        <span class="dot"></span>
+        Disponible para nuevos proyectos y colaboraciones
+      </div>
+
+      <div class="social-row">
+        <a href="https://wa.me/51916647305" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 0 5.37 0 12a11.9 11.9 0 001.68 6.06L0 24l6.18-1.62A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.19-1.24-6.19-3.48-8.52zM12 22a9.9 9.9 0 01-5.05-1.39l-.36-.21-3.67.96.98-3.58-.23-.37A9.91 9.91 0 012 12C2 6.49 6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm5.3-7.48c-.29-.15-1.7-.84-1.97-.94-.26-.1-.45-.15-.64.15s-.73.94-.9 1.13-.33.22-.61.07a8.13 8.13 0 01-2.39-1.47 9.03 9.03 0 01-1.66-2.06c-.17-.29 0-.45.13-.6.14-.15.29-.33.43-.5.15-.17.19-.29.29-.48.1-.19.05-.36-.03-.51-.07-.15-.64-1.53-.88-2.09-.23-.55-.47-.47-.64-.48h-.55c-.19 0-.5.07-.76.36s-.99.96-.99 2.34.99 2.7 1.13 2.88c.14.19 1.96 2.99 4.74 4.19.66.29 1.18.46 1.59.59.67.21 1.27.18 1.75.11.53-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34z"/></svg>
+    </a>
+    <a href="https://github.com/Alexander-Manosalva-Peralta" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577v-2.02c-3.338.724-4.033-1.415-4.033-1.415-.546-1.385-1.333-1.755-1.333-1.755-1.09-.744.083-.729.083-.729 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.762-1.605-2.665-.3-5.466-1.335-5.466-5.933 0-1.31.468-2.38 1.236-3.22-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.47 11.47 0 013.003-.404c1.02.004 2.047.137 3.003.404 2.29-1.552 3.297-1.23 3.297-1.23.655 1.653.242 2.873.118 3.176.77.84 1.236 1.91 1.236 3.22 0 4.61-2.803 5.63-5.475 5.922.43.372.823 1.102.823 2.222v3.293c0 .322.218.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/yojan-alexander-manosalva-peralta-862309312/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.447 20.452H17.2V14.8c0-1.344-.026-3.072-1.873-3.072-1.874 0-2.162 1.462-2.162 2.973v5.751H9.018V9h3.116v1.561h.045c.434-.822 1.494-1.69 3.072-1.69 3.285 0 3.89 2.164 3.89 4.977v6.604zM5.337 7.433a1.804 1.804 0 110-3.608 1.804 1.804 0 010 3.608zM6.918 20.452H3.652V9h3.266v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451c.98 0 1.778-.774 1.778-1.729V1.729C24 .774 23.205 0 22.225 0z"/></svg>
+    </a>
+    <a href="mailto:yojan.manosalva@upch.pe" aria-label="Correo">
+      <svg viewBox="0 0 24 24"><path d="M12 13.065l-11.99-7.2v15.135c0 .552.447 1 1 1h21.98c.553 0 1-.448 1-1V5.865l-11.99 7.2zM12 11.293l11.99-7.2H.01l11.99 7.2z"/></svg>
+    </a>
+      </div>
+    </section>
+
+    <!-- FORMULARIO -->
+    <section class="form-panel glass-card" data-reveal="right">
+      <h2>Envíame un mensaje</h2>
+      <form id="contact-form">
+        <div class="form-row two-cols">
+          <div>
+            <label for="name">Nombre</label>
+            <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+          </div>
+          <div>
+            <label for="email">Correo</label>
+            <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="subject">Asunto</label>
+          <input type="text" id="subject" name="subject" placeholder="¿De qué se trata?" required>
+        </div>
+        <div class="form-row">
+          <label for="message">Mensaje</label>
+          <textarea id="message" name="message" rows="5" placeholder="Cuéntame sobre tu proyecto o idea..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-solid" style="width:100%; justify-content:center;">Enviar mensaje</button>
+        <p class="form-status" id="form-status"></p>
+      </form>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 2026 Yojan Manosalva · Todos los derechos reservados</p>
+  </footer>
+
+  <script src="scripts/main.js"></script>
+  <script>
+    // El formulario abre el cliente de correo del usuario con los datos precargados.
+    // (Puedes reemplazar esto por un servicio como Formspree o un backend propio.)
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+      const mailto = `mailto:yojan.manosalva@example.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+      window.location.href = mailto;
+      status.textContent = 'Se abrirá tu cliente de correo para completar el envío.';
+      status.classList.add('is-visible', 'is-success');
+    });
+  </script>
+</body>
+</html>

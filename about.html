@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre mí — Yojan Manosalva</title>
+  <meta name="description" content="Conoce a Yojan Alexander Manosalva Peralta: estudiante de Ingeniería Informática, desarrollador front-end, fundador de Vexum y diseñador de experiencias digitales." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style/main.css" />
+
+  <style>
+    body { background-color: #0a0a0a; }
+
+    /* ==== HERO ==== */
+    .hero {
+      min-height: 92vh;
+      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.75)), url('assets/img/fondop4.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      padding: calc(var(--nav-height) + 2rem) clamp(1.5rem, 6vw, 60px) 4rem;
+      position: relative;
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 640px; }
+
+    .hero-content h1 {
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-weight: 800;
+      line-height: 1.08;
+    }
+
+    .hero-content p {
+      margin-top: 18px;
+      color: #dcdcdc;
+      font-size: 16px;
+      line-height: 1.85;
+      max-width: 560px;
+    }
+
+    .details { display: flex; gap: 2.5rem; margin-top: 3.2rem; flex-wrap: wrap; }
+
+    .detail-box { display: flex; flex-direction: column; gap: 8px; }
+    .detail-box span { font-weight: 600; color: #fff; }
+    .detail-box small { color: var(--text-dim); font-size: .82rem; }
+    .detail-box a.detail-link {
+      color: var(--accent-2); font-size: .8rem; font-weight: 700;
+      text-decoration: none; display: inline-flex; align-items: center; gap: .3rem;
+      transition: gap var(--transition-fast), color var(--transition-fast);
+    }
+    .detail-box a.detail-link:hover { gap: .55rem; color: #fff; }
+    .detail-box a.detail-link svg { width: 12px; height: 12px; fill: currentColor; }
+
+    /* ==== SECCIONES GENERALES ==== */
+    .section { padding: clamp(70px, 10vw, 110px) clamp(1.5rem, 6vw, 60px); background-color: #0e0e0e; }
+    .section:nth-of-type(even) { background-color: #0a0a0a; }
+    .section-head { text-align: center; max-width: 640px; margin: 0 auto 3.5rem; }
+    .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 700; margin-bottom: .8rem; }
+    .section-head p { color: var(--text-muted); font-size: .98rem; }
+
+    /* ==== VEXUM ==== */
+    .vexum-card {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: stretch;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(255,255,255,0.06);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .vexum-card:hover { transform: scale(1.01); box-shadow: 0 0 40px rgba(255,94,87,0.14); border-color: rgba(255,94,87,0.3); }
+
+    .vexum-brand {
+      width: 38%;
+      min-width: 220px;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,94,87,0.22), transparent 55%),
+        radial-gradient(circle at 80% 80%, rgba(255,160,122,0.16), transparent 55%),
+        #111;
+      overflow: hidden;
+    }
+    .vexum-brand::before {
+      content: '';
+      position: absolute; inset: -20%;
+      background: repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 26px);
+    }
+    .vexum-wordmark {
+      position: relative; z-index: 2;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3.4rem, 8vw, 5.2rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff, var(--accent-2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .vexum-content { flex: 1; padding: 2.8rem 3rem; display: flex; flex-direction: column; justify-content: center; }
+    .vexum-content .badge-row { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .vexum-content .badge-row span {
+      font-size: .74rem; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
+      padding: .32rem .75rem; border-radius: 20px;
+      background: rgba(255,94,87,0.14); border: 1px solid rgba(255,94,87,0.35); color: var(--accent-2);
+    }
+    .vexum-content h2 { color: #fff; font-size: 1.85rem; margin-bottom: .9rem; }
+    .vexum-content p.desc { color: #ddd; line-height: 1.75; opacity: .92; margin-bottom: 1.6rem; max-width: 560px; }
+
+    .vexum-stage-list { list-style: none; display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.8rem; }
+    .vexum-stage-list li { font-size: .87rem; color: #d8d8d8; display: flex; align-items: center; gap: .55rem; }
+    .vexum-stage-list li .pulse-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent-2); flex-shrink: 0;
+      box-shadow: 0 0 0 0 rgba(255,94,87,0.5);
+      animation: vexumPulse 2.2s ease-out infinite;
+    }
+    @keyframes vexumPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(255,94,87,0.45); }
+      70%  { box-shadow: 0 0 0 10px rgba(255,94,87,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,94,87,0); }
+    }
+
+    .vexum-actions { display: flex; gap: .8rem; flex-wrap: wrap; align-items: center; }
+    .vexum-actions .btn svg { width: 14px; height: 14px; fill: currentColor; margin-left: .35rem; vertical-align: -2px; }
+
+    @media (max-width: 800px) {
+      .vexum-card { flex-direction: column; }
+      .vexum-brand { width: 100%; height: 160px; }
+      .vexum-content { padding: 2.2rem 1.6rem; }
+    }
+
+    /* ==== HABILIDADES ==== */
+    .skills-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.6rem;
+    }
+
+    .skill-card {
+      padding: 1.8rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.1rem;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .skill-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.35); border-color: rgba(255,255,255,0.28); }
+
+    .skill-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .35rem; }
+    .skill-card p { color: var(--text-muted); font-size: .88rem; line-height: 1.55; }
+
+    .skill-level {
+      margin-top: .7rem;
+      height: 5px; border-radius: 4px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .skill-level i { display: block; height: 100%; background: var(--accent-gradient); border-radius: 4px; }
+
+    /* ==== TRAYECTORIA ==== */
+    .timeline {
+      max-width: 720px; margin: 0 auto;
+      position: relative;
+      padding-left: 2.2rem;
+      border-left: 2px solid rgba(255,255,255,0.12);
+    }
+    .timeline-item { position: relative; padding-bottom: 2.6rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -2.42rem; top: 4px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent-gradient);
+      box-shadow: 0 0 0 4px rgba(255,94,87,0.18);
+      transition: box-shadow var(--transition);
+    }
+    .timeline-item:hover::before { box-shadow: 0 0 0 7px rgba(255,94,87,0.28); }
+    .timeline-item .tag { color: var(--accent-2); font-size: .8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+    .timeline-item h3 { margin: .4rem 0 .5rem; font-size: 1.15rem; }
+    .timeline-item p { color: var(--text-muted); font-size: .92rem; line-height: 1.6; max-width: 520px; }
+    .timeline-item a.timeline-link {
+      display: inline-flex; align-items: center; gap: .35rem;
+      margin-top: .6rem; color: var(--accent-2); font-size: .85rem; font-weight: 700; text-decoration: none;
+      transition: gap var(--transition-fast), color var(--transition-fast);
+    }
+    .timeline-item a.timeline-link:hover { gap: .6rem; color: #fff; }
+    .timeline-item a.timeline-link svg { width: 12px; height: 12px; fill: currentColor; }
+
+    /* ==== DESCUBRIR / CTA ==== */
+    .discover {
+      background: linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.75)), url('assets/img/fondo6.jpg') center/cover no-repeat;
+      position: relative;
+      text-align: center;
+    }
+    .discover-content { max-width: 620px; margin: 0 auto; position: relative; z-index: 2; }
+    .discover h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 1.2rem; }
+    .discover .discover-actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+    .discover blockquote {
+      margin-top: 2rem;
+      font-size: .98rem;
+      line-height: 1.8;
+      color: #dcdcdc;
+      font-style: italic;
+      border-left: 3px solid var(--accent);
+      padding-left: 1.2rem;
+      text-align: left;
+      display: inline-block;
+    }
+
+    @media (max-width: 700px) {
+      .details { gap: 1.6rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="site-nav" id="navbar">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/img/perfil.png" alt="Logo de Yojan">
+      <span>Yojan</span>
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú"><span></span></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="about.html" class="is-active">Sobre mí</a></li>
+      <li><a href="projects.html">Proyectos</a></li>
+      <li><a href="contact.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-content" data-parallax="6">
+      <p class="section-eyebrow" data-reveal="fade" style="--reveal-delay:0ms">Sobre mí</p>
+      <h1 data-reveal="up" style="--reveal-delay:80ms">Diseño y construyo experiencias digitales con intención</h1>
+      <p data-reveal="up" style="--reveal-delay:180ms">Soy Yojan Alexander Manosalva Peralta, estudiante de Ingeniería Informática apasionado por el desarrollo web, el diseño moderno y las experiencias digitales inmersivas. Me gusta crear proyectos donde la estética y la funcionalidad se unen para resolver problemas reales.</p>
+
+      <div class="details">
+        <div class="detail-box" data-reveal="up" style="--reveal-delay:260ms">
+          <span>Desarrollador Front-End</span>
+          <small>HTML · CSS · JavaScript</small>
+        </div>
+        <div class="detail-box" data-reveal="up" style="--reveal-delay:340ms">
+          <span>Diseñador UI/UX</span>
+          <small>Interfaces claras y funcionales</small>
+        </div>
+        <div class="detail-box" data-reveal="up" style="--reveal-delay:420ms">
+          <span>Fundador de Vexum</span>
+          <small>Startup en etapa inicial</small>
+          <a class="detail-link" href="https://vexum-q0hk.onrender.com" target="_blank" rel="noopener">
+            Visitar Vexum <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VEXUM -->
+  <section class="section">
+    <div class="section-head" data-reveal="up">
+      <p class="section-eyebrow">Emprendimiento</p>
+      <h2>Vexum</h2>
+      <p>Mi proyecto como fundador, todavía dando sus primeros pasos.</p>
+    </div>
+
+    <div class="vexum-card" data-reveal="zoom">
+      <div class="vexum-brand">
+        <span class="vexum-wordmark">Vexum</span>
+      </div>
+      <div class="vexum-content">
+        <div class="badge-row">
+          <span>Etapa inicial</span>
+          <span>Fundador</span>
+        </div>
+        <h2>Construyendo Vexum desde cero</h2>
+        <p class="desc">Vexum es la startup que estoy levantando como fundador. Está en una etapa muy temprana: sigo iterando sobre la idea, el producto y la experiencia, así que lo que vas a ver hoy es apenas el comienzo de algo que planeo seguir construyendo con calma y criterio.</p>
+        <ul class="vexum-stage-list">
+          <li><span class="pulse-dot"></span> En desarrollo activo</li>
+          <li><span class="pulse-dot"></span> Validando el producto</li>
+          <li><span class="pulse-dot"></span> Abierto a primeros usuarios y feedback</li>
+        </ul>
+        <div class="vexum-actions">
+          <a class="btn btn-solid" href="https://vexum-q0hk.onrender.com" target="_blank" rel="noopener">
+            Visitar Vexum <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg>
+          </a>
+          <a class="btn btn-outline" href="contact.html">Hablemos de Vexum</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HABILIDADES -->
+  <section class="section">
+    <div class="section-head" data-reveal="up">
+      <p class="section-eyebrow">Stack técnico</p>
+      <h2>Habilidades destacadas</h2>
+      <p>Lenguajes, herramientas y tecnologías con las que trabajo constantemente.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card glass-card" data-reveal="left">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><path d="M4 3l1.6 17L12 22l6.4-2L20 3H4z" fill="none"/><path d="M12 6v13M7 8h10M8 12h8"/></svg></div>
+        <div>
+          <h3>HTML5 &amp; CSS3</h3>
+          <p>Maquetación semántica, animaciones y diseño responsivo desde cero.</p>
+          <div class="skill-level"><i style="width:90%"></i></div>
+        </div>
+      </div>
+
+      <div class="skill-card glass-card" data-reveal="up">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16M4 4l1.6 15.5L12 21l6.4-1.5L20 4"/><path d="M9 10l2 2-2 2M15 10l-2 2 2 2" fill="none"/></svg></div>
+        <div>
+          <h3>JavaScript</h3>
+          <p>Interactividad, animaciones y lógica de interfaz del lado del cliente.</p>
+          <div class="skill-level"><i style="width:82%"></i></div>
+        </div>
+      </div>
+
+      <div class="skill-card glass-card" data-reveal="right">
+        <div class="skill-icon"><span>C</span></div>
+        <div>
+          <h3>Programación en C</h3>
+          <p>Estructuras de datos, algoritmos y lógica computacional aplicada.</p>
+          <div class="skill-level"><i style="width:75%"></i></div>
+        </div>
+      </div>
+
+      <div class="skill-card glass-card" data-reveal="left">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2" fill="none"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <div>
+          <h3>Diseño de Interfaces</h3>
+          <p>Prototipado y sistemas visuales centrados en la experiencia de usuario.</p>
+          <div class="skill-level"><i style="width:80%"></i></div>
+        </div>
+      </div>
+
+      <div class="skill-card glass-card" data-reveal="up">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.4" fill="none"/><circle cx="6" cy="19" r="2.4" fill="none"/><circle cx="18" cy="19" r="2.4" fill="none"/><path d="M12 7.4V14M12 14L7.6 17M12 14l4.4 3"/></svg></div>
+        <div>
+          <h3>Control de versiones</h3>
+          <p>Flujo de trabajo con Git para versionar y colaborar en proyectos.</p>
+          <div class="skill-level"><i style="width:70%"></i></div>
+        </div>
+      </div>
+
+      <div class="skill-card glass-card" data-reveal="right">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.8L21 9.6l-4.4 4.1L17.8 20 12 16.8 6.2 20l1.2-6.3L3 9.6l6.4-.8L12 3z" fill="none"/></svg></div>
+        <div>
+          <h3>Innovación y creatividad</h3>
+          <p>Búsqueda constante de soluciones originales para problemas cotidianos.</p>
+          <div class="skill-level"><i style="width:88%"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAYECTORIA -->
+  <section class="section">
+    <div class="section-head" data-reveal="up">
+      <p class="section-eyebrow">Camino recorrido</p>
+      <h2>Mi trayectoria</h2>
+      <p>Un vistazo a mi formación y evolución como desarrollador y fundador.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item" data-reveal="left">
+        <span class="tag">Actualidad</span>
+        <h3>Estudiante de Ingeniería Informática</h3>
+        <p>Profundizando en desarrollo web, estructuras de datos y buenas prácticas de diseño de software.</p>
+      </div>
+      <div class="timeline-item" data-reveal="right">
+        <span class="tag">Emprendimiento</span>
+        <h3>Fundador de Vexum</h3>
+        <p>Levantando Vexum desde cero: una startup en etapa inicial en la que estoy validando producto, diseño y primeros usuarios.</p>
+        <a class="timeline-link" href="https://vexum-q0hk.onrender.com" target="_blank" rel="noopener">
+          Visitar Vexum <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg>
+        </a>
+      </div>
+      <div class="timeline-item" data-reveal="left">
+        <span class="tag">Proyectos personales</span>
+        <h3>Desarrollo de aplicaciones web interactivas</h3>
+        <p>Construcción de herramientas propias como gestores de datos, reproductores multimedia y portafolios interactivos.</p>
+      </div>
+      <div class="timeline-item" data-reveal="right">
+        <span class="tag">Aprendizaje continuo</span>
+        <h3>Diseño de interfaces y experiencia de usuario</h3>
+        <p>Exploración de herramientas de diseño y principios de UI/UX para mejorar cada proyecto que construyo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESCUBRIR -->
+  <section class="section discover">
+    <div class="discover-content" data-reveal="zoom">
+      <p class="section-eyebrow">Filosofía de trabajo</p>
+      <h2>Crear es descubrir</h2>
+      <div class="discover-actions">
+        <a class="btn btn-solid" href="projects.html">Ver proyectos</a>
+        <a class="btn btn-outline" href="https://vexum-q0hk.onrender.com" target="_blank" rel="noopener">Visitar Vexum</a>
+      </div>
+      <blockquote>"El código es una forma de arte. Cada línea cuenta una historia y cada proyecto refleja una visión."<br><br>— Yojan Manosalva</blockquote>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>© 2026 Yojan Manosalva · Todos los derechos reservados</p>
+    <div class="social">
+      <a href="https://wa.me/51916647305" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 0 5.37 0 12a11.9 11.9 0 001.68 6.06L0 24l6.18-1.62A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.19-1.24-6.19-3.48-8.52zM12 22a9.9 9.9 0 01-5.05-1.39l-.36-.21-3.67.96.98-3.58-.23-.37A9.91 9.91 0 012 12C2 6.49 6.49 2 12 2s10 4.49 10 10-4.49 10-10 10zm5.3-7.48c-.29-.15-1.7-.84-1.97-.94-.26-.1-.45-.15-.64.15s-.73.94-.9 1.13-.33.22-.61.07a8.13 8.13 0 01-2.39-1.47 9.03 9.03 0 01-1.66-2.06c-.17-.29 0-.45.13-.6.14-.15.29-.33.43-.5.15-.17.19-.29.29-.48.1-.19.05-.36-.03-.51-.07-.15-.64-1.53-.88-2.09-.23-.55-.47-.47-.64-.48h-.55c-.19 0-.5.07-.76.36s-.99.96-.99 2.34.99 2.7 1.13 2.88c.14.19 1.96 2.99 4.74 4.19.66.29 1.18.46 1.59.59.67.21 1.27.18 1.75.11.53-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34z"/></svg>
+    </a>
+    <a href="https://github.com/Alexander-Manosalva-Peralta" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577v-2.02c-3.338.724-4.033-1.415-4.033-1.415-.546-1.385-1.333-1.755-1.333-1.755-1.09-.744.083-.729.083-.729 1.205.085 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.762-1.605-2.665-.3-5.466-1.335-5.466-5.933 0-1.31.468-2.38 1.236-3.22-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.47 11.47 0 013.003-.404c1.02.004 2.047.137 3.003.404 2.29-1.552 3.297-1.23 3.297-1.23.655 1.653.242 2.873.118 3.176.77.84 1.236 1.91 1.236 3.22 0 4.61-2.803 5.63-5.475 5.922.43.372.823 1.102.823 2.222v3.293c0 .322.218.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/yojan-alexander-manosalva-peralta-862309312/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.447 20.452H17.2V14.8c0-1.344-.026-3.072-1.873-3.072-1.874 0-2.162 1.462-2.162 2.973v5.751H9.018V9h3.116v1.561h.045c.434-.822 1.494-1.69 3.072-1.69 3.285 0 3.89 2.164 3.89 4.977v6.604zM5.337 7.433a1.804 1.804 0 110-3.608 1.804 1.804 0 010 3.608zM6.918 20.452H3.652V9h3.266v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451c.98 0 1.778-.774 1.778-1.729V1.729C24 .774 23.205 0 22.225 0z"/></svg>
+    </a>
+    <a href="mailto:yojan.manosalva@upch.pe" aria-label="Correo">
+      <svg viewBox="0 0 24 24"><path d="M12 13.065l-11.99-7.2v15.135c0 .552.447 1 1 1h21.98c.553 0 1-.448 1-1V5.865l-11.99 7.2zM12 11.293l11.99-7.2H.01l11.99 7.2z"/></svg>
+    </a>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>
