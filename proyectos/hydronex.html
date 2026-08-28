@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hydronex — Proyecto de Yojan Manosalva</title>
+  <meta name="description" content="Hydronex: sistema de sensores y automatización para medir turbidez, pH y conductividad del agua, con gestión mediante plataforma web. 3er puesto en Prototipos RUNA — UPCH." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style/main.css" />
+
+  <style>
+    body { background-color: #08080a; }
+
+    /* ==== FONDO DIFUMINADO ==== */
+    .hy-bg {
+      position: fixed; inset: 0; z-index: -2;
+      background: url('../assets/img/fondo16.jpg') center/cover no-repeat;
+      filter: blur(14px) brightness(0.55) saturate(1.05);
+      transform: scale(1.1);
+    }
+    .hy-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(6,6,8,.55), rgba(6,6,8,.88) 60%, #08080a 100%);
+    }
+
+    /* ==== HERO / PÍLDORA FLOTANTE ==== */
+    .hy-hero {
+      padding: calc(var(--nav-height) + 3.5rem) clamp(1.5rem, 6vw, 70px) 2.5rem;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .hy-pill {
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 32px;
+      padding: 2.6rem clamp(1.6rem, 6vw, 4.5rem);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+      max-width: 780px;
+    }
+    .hy-pill p.eyebrow {
+      font-size: .8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent-2); margin-bottom: .9rem;
+    }
+    .hy-pill h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.6rem, 8vw, 5rem);
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #ffffff, var(--accent-2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hy-pill p.tagline {
+      margin-top: 1rem; color: #e2e2e2; font-size: 1.02rem; line-height: 1.7; max-width: 560px; margin-inline: auto;
+    }
+
+    .hy-badges { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; margin-top: 1.6rem; }
+    .hy-badges span {
+      font-size: .78rem; font-weight: 700; letter-spacing: .4px;
+      padding: .45rem .95rem; border-radius: 20px;
+      background: rgba(255,94,87,0.14); border: 1px solid rgba(255,94,87,0.35); color: var(--accent-2);
+    }
+
+    /* ==== BENTO GRID ==== */
+    .hy-grid {
+      max-width: 1200px; margin: 0 auto;
+      padding: 1rem clamp(1.5rem, 6vw, 70px) 5rem;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.4rem;
+    }
+
+    .hy-panel {
+      background: rgba(255,255,255,0.055);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 22px;
+      padding: 2rem;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .hy-panel:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.26); box-shadow: 0 16px 40px rgba(0,0,0,0.35); }
+
+    .hy-panel .panel-eyebrow {
+      font-size: .74rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent-2); margin-bottom: .7rem; display: flex; align-items: center; gap: .5rem;
+    }
+    .hy-panel .panel-eyebrow svg { width: 15px; height: 15px; fill: none; stroke: var(--accent-2); stroke-width: 1.8; }
+    .hy-panel h2 { font-size: 1.25rem; margin-bottom: .8rem; color: #fff; }
+    .hy-panel p { color: var(--text-muted); font-size: .95rem; line-height: 1.75; }
+    .hy-panel p + p { margin-top: .8rem; }
+
+    .span-4 { grid-column: span 4; }
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+    .span-6 { grid-column: span 6; }
+
+    /* Panel de desarrollo con "stat" destacado */
+    .hy-stat { display: flex; align-items: baseline; gap: .5rem; margin: .6rem 0 1rem; }
+    .hy-stat strong { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: #fff; }
+    .hy-stat span { color: var(--text-dim); font-size: .85rem; }
+
+    /* Panel de diseño en campo / imagen */
+    .hy-field-img {
+      border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14);
+      aspect-ratio: 16/9; margin-bottom: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.04);
+    }
+    .hy-field-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hy-field-img.is-placeholder { flex-direction: column; gap: .5rem; color: var(--text-dim); font-size: .85rem; text-align: center; padding: 1rem; }
+    .hy-field-img.is-placeholder svg { width: 34px; height: 34px; fill: none; stroke: var(--text-dim); stroke-width: 1.4; }
+
+    /* Colaboradores */
+    .hy-team { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-top: .4rem; }
+    .hy-member {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 1.1rem 1.2rem;
+    }
+    .hy-avatar {
+      width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem;
+      background: var(--accent-gradient); color: #1a0a08;
+    }
+    .hy-member h4 { font-size: .98rem; margin-bottom: .3rem; color: #fff; }
+    .hy-member p { color: var(--text-muted); font-size: .84rem; line-height: 1.55; }
+
+    /* CTA final */
+    .hy-cta {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 clamp(1.5rem, 6vw, 70px) 6rem;
+      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    }
+
+    @media (max-width: 860px) {
+      .span-4, .span-3, .span-2 { grid-column: span 6; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hy-bg"></div>
+
+  <a href="../projects.html" class="btn-back" data-go-back>
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l4.88-4.88L11.29 4.7 3.29 12.7l8 8 1.42-1.42L7.83 13H20z"/></svg>
+    Volver a proyectos
+  </a>
+
+  <!-- HERO -->
+  <section class="hy-hero">
+    <div class="hy-pill" data-reveal="zoom">
+      <p class="eyebrow">Proyecto universitario · Prototipos RUNA</p>
+      <h1>HYDRONEX</h1>
+      <p class="tagline">Sistema avanzado basado en sensores y tecnología de automatización.</p>
+      <div class="hy-badges">
+        <span>🏆 3er puesto</span>
+        <span>UPCH · Vicerrectorado de Investigación</span>
+        <span>Villa María del Triunfo</span>
+        <span>2024</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENTO GRID -->
+  <div class="hy-grid">
+
+    <div class="hy-panel span-4" data-reveal="up">
+      <p class="panel-eyebrow">
+        <svg viewBox="0 0 24 24"><path d="M12 2s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z"/></svg>
+        Descripción
+      </p>
+      <h2>Agua monitoreada y gestionada de forma inteligente</h2>
+      <p>Se propone implementar un sistema avanzado basado en sensores y tecnologías de automatización. Este sistema mide los parámetros de turbidez, pH y conductividad eléctrica del agua contaminada, dirige de manera inteligente su destino y, con la ayuda de una plataforma web, gestiona los datos y notifica al usuario.</p>
+    </div>
+
+    <div class="hy-panel span-2" data-reveal="up" style="--reveal-delay:80ms">
+      <p class="panel-eyebrow">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        ¿Cuál es la intención?
+      </p>
+      <p>Promover la sostenibilidad frente a la escasez de agua potable en el distrito de Villa María del Triunfo.</p>
+    </div>
+
+    <div class="hy-panel span-2" data-reveal="up">
+      <p class="panel-eyebrow">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+        Desarrollo
+      </p>
+      <div class="hy-stat"><strong>2</strong><span>meses de elaboración</span></div>
+      <p>El proyecto se desarrolló a inicios del año 2024.</p>
+    </div>
+
+    <!-- DISEÑO EN CAMPO -->
+    <div class="hy-panel span-4" data-reveal="up" style="--reveal-delay:80ms">
+      <p class="panel-eyebrow">
+        <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
+        Diseño en campo
+      </p>
+      <!--
+        Nota para Yojan: reemplaza este bloque cuando tengas el plano/foto de campo.
+        <div class="hy-field-img"><img src="../assets/img/hydronex-plano.jpg" alt="Plano de campo de Hydronex"></div>
+      -->
+      <div class="hy-field-img is-placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5-11 11"/></svg>
+        Aquí va el plano/foto de campo — súbelo a assets/img/
+      </div>
+      <p>Plano detallado que ilustra el funcionamiento integral del proyecto, proporcionando una visión clara y comprensible de su implementación en el entorno necesario. Este plano actúa como guía fundamental para visualizar el proyecto en su totalidad, facilitando su ejecución y comprensión.</p>
+    </div>
+
+    <!-- COLABORADORES -->
+    <div class="hy-panel span-6" data-reveal="up">
+      <p class="panel-eyebrow">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15 20c.3-2.4 2-4.4 4-4.9"/></svg>
+        Información detallada · Colaboradores
+      </p>
+      <div class="hy-team">
+        <div class="hy-member">
+          <div class="hy-avatar">LA</div>
+          <div>
+            <h4>Lizbeth Antay</h4>
+            <p>Coordinadora de investigación, responsable de la búsqueda de artículos científicos apropiados para el desarrollo del proyecto.</p>
+          </div>
+        </div>
+        <div class="hy-member">
+          <div class="hy-avatar">IH</div>
+          <div>
+            <h4>Ibet Huamany</h4>
+            <p>Coordinadora de prototipado eléctrico, responsable de la programación de datos y de la parte electrónica del sistema.</p>
+          </div>
+        </div>
+        <div class="hy-member">
+          <div class="hy-avatar">YM</div>
+          <div>
+            <h4>Yojan Manosalva</h4>
+            <p>Responsable de la plataforma web: gestión de datos y notificaciones del sistema. <em>(Edítalo si tu rol fue otro.)</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="hy-cta" data-reveal="up">
+    <!-- TODO Yojan: coloca aquí el enlace real cuando lo tengas -->
+    <a class="btn btn-solid" href="#" target="_blank" rel="noopener">Ver proyecto en vivo</a>
+    <a class="btn btn-outline" href="#" target="_blank" rel="noopener">Ver en línea / Descargar</a>
+    <a class="btn btn-ghost" href="../about.html#logros">Ver constancia del 3er puesto</a>
+  </div>
+
+  <script src="../scripts/main.js"></script>
+</body>
+</html>

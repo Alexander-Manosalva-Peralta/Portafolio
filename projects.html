@@ -453,6 +453,28 @@ spline-viewer.robot {
           </div>
         </div>
 
+        <!--
+          Nota para Yojan: cuando tengas una foto real de Hydronex (el prototipo o el equipo),
+          súbela a assets/img/ y reemplaza "assets/img/fondo14.jpg" por esa imagen.
+        -->
+        <div class="card" data-reveal="up" style="--reveal-delay:200ms">
+          <div class="card-media">
+            <img src="assets/img/fondo14.jpg" alt="Hydronex — sistema de sensores para tratamiento de agua">
+            <span class="card-status soon">Académico</span>
+          </div>
+          <div class="card-content">
+            <span class="card-meta">Proyecto universitario · 3er puesto</span>
+            <h4>Hydronex — Prototipos RUNA</h4>
+            <p class="card-desc">Sistema con sensores y automatización que mide turbidez, pH y conductividad del agua, y gestiona los datos mediante una plataforma web. Desarrollado en equipo de 3 para Prototipos RUNA (UPCH).</p>
+            <ul class="feature-list">
+              <li><span class="dot">✓</span> Sensores + automatización</li>
+              <li><span class="dot">✓</span> Plataforma web de gestión</li>
+            </ul>
+            <div class="tags"><span>IoT</span><span>Sostenibilidad</span><span>Plataforma web</span></div>
+            <button class="card-link" data-project-trigger="hydronex">Ver proyecto <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg></button>
+          </div>
+        </div>
+
         <div class="card is-mystery" data-reveal="up" style="--reveal-delay:240ms">
           <div class="card-media">
             <img src="assets/img/combi.png" alt="Proyecto incógnito Chapa tu combi">
@@ -539,6 +561,17 @@ spline-viewer.robot {
     // Edita aquí la info de cada proyecto. "locked: true" = todavía no publicado (modal muestra
     // mensaje de "sígueme en redes" en vez de los links de ver/descargar código).
     const PROJECTS = {
+      hydronex: {
+        title: "Hydronex — Prototipos RUNA",
+        status: "live",
+        image: "assets/img/fondo14.jpg",
+        tags: ["IoT", "Sensores", "Automatización", "Plataforma web", "Sostenibilidad"],
+        desc: "Sistema con sensores y tecnología de automatización que mide turbidez, pH y conductividad eléctrica del agua contaminada, dirige de forma inteligente su destino y gestiona los datos mediante una plataforma web que notifica al usuario. Desarrollado en equipo de 3 para promover la sostenibilidad frente a la escasez de agua potable en Villa María del Triunfo. Obtuvo el 3er puesto en Prototipos RUNA, organizado por el Vicerrectorado de Investigación de la UPCH.",
+        // TODO Yojan: reemplaza estos enlaces cuando los tengas listos.
+        liveUrl: "proyectos/hydronex.html",
+        codeUrl: "#",
+        locked: false
+      },
       casino: {
         title: "Casino entre Amigos",
         status: "live",
