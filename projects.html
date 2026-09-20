@@ -6,6 +6,7 @@
   <title>Proyectos — Yojan Alexander Manosalva Peralta</title>
   <meta name="description" content="Explora los proyectos desarrollados por Yojan Manosalva: aplicaciones web interactivas, herramientas propias y experimentos de diseño." />
 
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style/main.css">
@@ -350,8 +351,13 @@ spline-viewer.robot {
 
   <nav class="site-nav">
     <a href="index.html" class="nav-brand">
-      <img src="assets/img/perfil.png" alt="Logo de Yojan">
-      <span>Yojan</span>
+      <div class="nav-brand-avatar">
+        <img src="assets/img/favicon.png" alt="Logo de Yojan">
+      </div>
+      <div class="nav-brand-text">
+        <span class="nav-brand-title">Yojan</span>
+        <span class="nav-brand-badge">Portafolio</span>
+      </div>
     </a>
     <button class="nav-toggle" aria-label="Abrir menú"><span></span></button>
     <ul class="nav-links">
@@ -399,7 +405,27 @@ spline-viewer.robot {
 
       <div class="cards">
 
+        <!-- 1. TRÁMITES UPCH -->
         <div class="card" data-reveal="up">
+          <div class="card-media">
+            <img src="assets/img/tramites-upch.jpg" alt="Trámites UPCH — Plataforma de Gestión y Helpy Bot">
+            <span class="card-status live">Activo</span>
+          </div>
+          <div class="card-content">
+            <span class="card-meta">Plataforma Universitaria · MVP / HCD</span>
+            <h4>Trámites UPCH</h4>
+            <p class="card-desc">Trabajo en equipo con enfoque Human-Centered Design para la UPCH. Me encargué íntegramente del diseño del MVP: arquitectura de interfaz, portal estudiantil y el asistente Helpy Bot.</p>
+            <ul class="feature-list">
+              <li><span class="dot">✓</span> Diseño integral de experiencia e interfaz de usuario</li>
+              <li><span class="dot">✓</span> Asistente Helpy Bot y seguimiento de trámites</li>
+            </ul>
+            <div class="tags"><span>UI/UX</span><span>MVP</span><span>HCD</span><span>UPCH</span></div>
+            <button class="card-link" data-project-trigger="tramites">Ver proyecto <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg></button>
+          </div>
+        </div>
+
+        <!-- 2. REPRODUCTOR 3D -->
+        <div class="card" data-reveal="up" style="--reveal-delay:80ms">
           <div class="card-media">
             <img src="assets/img/fondoS.jpg" alt="Reproductor 3D de composiciones propias">
             <span class="card-status live">Activo</span>
@@ -417,9 +443,10 @@ spline-viewer.robot {
           </div>
         </div>
 
-        <div class="card" data-reveal="up" style="--reveal-delay:80ms">
+        <!-- 3. CASINO ENTRE AMIGOS -->
+        <div class="card" data-reveal="up" style="--reveal-delay:160ms">
           <div class="card-media">
-            <img src="assets/img/fondo17.jpg" alt="Casino entre Amigos">
+            <img src="assets/img/fondop4.jpg" alt="Casino entre Amigos">
             <span class="card-status live">Activo</span>
           </div>
           <div class="card-content">
@@ -435,74 +462,98 @@ spline-viewer.robot {
           </div>
         </div>
 
-        <div class="card" data-reveal="up" style="--reveal-delay:160ms">
-          <div class="card-media">
-            <img src="assets/img/fondo7.jpg" alt="Este portafolio web">
-            <span class="card-status live">Activo</span>
-          </div>
-          <div class="card-content">
-            <span class="card-meta">Sitio web</span>
-            <h4>Portafolio Web Interactivo</h4>
-            <p class="card-desc">Este mismo sitio: un portafolio con escenas 3D, animaciones al hacer scroll y un diseño responsivo construido desde cero.</p>
-            <ul class="feature-list">
-              <li><span class="dot">✓</span> Animaciones al hacer scroll</li>
-              <li><span class="dot">✓</span> Diseño 100% responsivo</li>
-            </ul>
-            <div class="tags"><span>HTML</span><span>CSS</span><span>Spline 3D</span></div>
-            <button class="card-link" data-project-trigger="portafolio">Ver proyecto <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg></button>
-          </div>
-        </div>
-
-        <!--
-          Nota para Yojan: cuando tengas una foto real de Hydronex (el prototipo o el equipo),
-          súbela a assets/img/ y reemplaza "assets/img/fondo14.jpg" por esa imagen.
-        -->
+        <!-- 4. HYDRONEX -->
         <div class="card" data-reveal="up" style="--reveal-delay:200ms">
           <div class="card-media">
-            <img src="assets/img/fondo14.jpg" alt="Hydronex — sistema de sensores para tratamiento de agua">
-            <span class="card-status soon">Académico</span>
+            <img src="assets/img/hydronex.png" alt="Hydronex — Prototipos RUNA UPCH">
+            <span class="card-status live" style="color:#7CFFA0; border-color:rgba(124,255,160,0.4);">🏆 3er Puesto</span>
           </div>
           <div class="card-content">
-            <span class="card-meta">Proyecto universitario · 3er puesto</span>
+            <span class="card-meta">IoT & Automatización · UPCH</span>
             <h4>Hydronex — Prototipos RUNA</h4>
-            <p class="card-desc">Sistema con sensores y automatización que mide turbidez, pH y conductividad del agua, y gestiona los datos mediante una plataforma web. Desarrollado en equipo de 3 para Prototipos RUNA (UPCH).</p>
+            <p class="card-desc">Sistema con sensores y automatización para tratamiento inteligente de agua residual en VMT. Galardonado con el 3er puesto en el Concurso de Prototipos Runayay Cayetano (UPCH).</p>
             <ul class="feature-list">
-              <li><span class="dot">✓</span> Sensores + automatización</li>
-              <li><span class="dot">✓</span> Plataforma web de gestión</li>
+              <li><span class="dot">✓</span> 🏆 3er puesto en concurso de innovación UPCH</li>
+              <li><span class="dot">✓</span> Monitoreo en tiempo real de turbidez, pH y flujo</li>
             </ul>
-            <div class="tags"><span>IoT</span><span>Sostenibilidad</span><span>Plataforma web</span></div>
+            <div class="tags"><span>IoT</span><span>Sostenibilidad</span><span>UPCH</span><span>Hardware</span></div>
             <button class="card-link" data-project-trigger="hydronex">Ver proyecto <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg></button>
           </div>
         </div>
 
-        <div class="card is-mystery" data-reveal="up" style="--reveal-delay:240ms">
+        <!-- 5. MR. BARDOS -->
+        <div class="card" data-reveal="up" style="--reveal-delay:240ms">
           <div class="card-media">
-            <img src="assets/img/combi.png" alt="Proyecto incógnito Chapa tu combi">
-            <span class="card-status mystery">Incógnito</span>
-            <div class="mini-lock">
-              <svg viewBox="0 0 24 24"><path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2v-9a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm-3 8V6a3 3 0 016 0v3H9z"/></svg>
-            </div>
+            <img src="assets/img/mr-bardos.jpg" alt="Mr. Bardos — E-commerce Gastronómico">
+            <span class="card-status live">Activo</span>
           </div>
           <div class="card-content">
-            <span class="card-meta">App de transporte</span>
-            <h4>Chapa tu combi</h4>
-            <p class="card-desc">Todavía en las sombras. Sígueme en redes o vuelve pronto para descubrir de qué se trata.</p>
-            <ul class="feature-list mystery">
-              <li><span class="bar w1"></span></li>
-              <li><span class="bar w2"></span></li>
+            <span class="card-meta">E-commerce · Restaurante & WhatsApp</span>
+            <h4>Mr. Bardos — Catálogo & Pedidos</h4>
+            <p class="card-desc">Plataforma de comercio electrónico para restaurante gastronómico, con catálogo digital interactivo, carrito de compras dinámico y conversión directa de órdenes a WhatsApp.</p>
+            <ul class="feature-list">
+              <li><span class="dot">✓</span> Catálogo visual de productos con carrito interactivo</li>
+              <li><span class="dot">✓</span> Automatización de pedidos directos a WhatsApp</li>
             </ul>
-            <button class="card-link" data-project-trigger="chapatucombi">Más detalles <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg></button>
+            <div class="tags"><span>E-commerce</span><span>JavaScript</span><span>WhatsApp API</span></div>
+            <button class="card-link" data-project-trigger="bardos">Ver proyecto <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg></button>
           </div>
         </div>
 
-        <div class="card is-placeholder" data-reveal="up" style="--reveal-delay:320ms">
-          <div class="card-media"><span class="plus">+</span></div>
+        <!-- 6. REDES NEURONALES -->
+        <div class="card" data-reveal="up" style="--reveal-delay:280ms">
+          <div class="card-media">
+            <img src="assets/img/redes-neuronales.jpg" alt="Redes Neuronales — Métodos Numéricos">
+            <span class="card-status live">Activo</span>
+          </div>
           <div class="card-content">
-            <span class="card-meta">＋ Espacio libre</span>
-            <h4>Próximo proyecto</h4>
-            <p class="card-desc">Espacio reservado y listo para tu siguiente proyecto. Edita <code>proyectos/plantilla-1.html</code> para publicarlo aquí.</p>
-            <span class="card-status soon" style="position:static; display:inline-block; width:fit-content;">Próximamente</span>
-            <a class="card-link" href="proyectos/plantilla-1.html">Ver plantilla <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg></a>
+            <span class="card-meta">Machine Learning & Métodos Numéricos</span>
+            <h4>Redes Neuronales — Datasets Reales</h4>
+            <p class="card-desc">Plataforma interactiva de experimentación y entrenamiento de redes neuronales sobre datos reales (MNIST, CDC Diabetes, California Housing) con análisis de convergencia y funciones de pérdida.</p>
+            <ul class="feature-list">
+              <li><span class="dot">✓</span> Entrenamiento y optimización sobre datasets reales</li>
+              <li><span class="dot">✓</span> Dashboard interactivo de pérdida y métricas</li>
+            </ul>
+            <div class="tags"><span>Machine Learning</span><span>Data Science</span><span>Python/Web</span></div>
+            <button class="card-link" data-project-trigger="redes">Ver proyecto <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg></button>
+          </div>
+        </div>
+
+        <!-- 7. NETFLIX PRIZE DATA -->
+        <div class="card" data-reveal="up" style="--reveal-delay:320ms">
+          <div class="card-media">
+            <img src="assets/img/netflix-prize.jpg" alt="Netflix Prize — Sistema de Recomendación">
+            <span class="card-status live">Activo</span>
+          </div>
+          <div class="card-content">
+            <span class="card-meta">Frontend Cinematográfico & Métodos Numéricos</span>
+            <h4>Netflix Prize — Recomendador Numérico</h4>
+            <p class="card-desc">Sistema de recomendación algorítmico basado en el Netflix Prize Dataset. Diseñé y desarrollé todo el frontend cinemático estilo Netflix con dashboards analíticos y gráficos de predicción.</p>
+            <ul class="feature-list">
+              <li><span class="dot">✓</span> Experiencia visual cinemática fiel al ecosistema Netflix</li>
+              <li><span class="dot">✓</span> Factorización de matrices (SVD) y analítica de error</li>
+            </ul>
+            <div class="tags"><span>Frontend UI</span><span>Métodos Numéricos</span><span>Matrix Factorization</span></div>
+            <button class="card-link" data-project-trigger="netflix">Ver proyecto <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg></button>
+          </div>
+        </div>
+
+        <!-- 8. ALEANA E-COMMERCE -->
+        <div class="card" data-reveal="up" style="--reveal-delay:360ms">
+          <div class="card-media">
+            <img src="assets/img/aleana.jpg" alt="Aleana — E-commerce de Moda Femenina">
+            <span class="card-status live">Activo</span>
+          </div>
+          <div class="card-content">
+            <span class="card-meta">Tienda Online & Moda Femenina</span>
+            <h4>Aleana — Tienda de Ropa Online</h4>
+            <p class="card-desc">Tienda online moderna y sofisticada para marca de moda femenina. Desarrollada con arquitectura de alta conversión, catálogo dinámico de prendas y experiencia de compra mobile-first fluida.</p>
+            <ul class="feature-list">
+              <li><span class="dot">✓</span> Catálogo dinámico con vista detallada de prendas</li>
+              <li><span class="dot">✓</span> Diseño responsivo de alta conversión y checkout ágil</li>
+            </ul>
+            <div class="tags"><span>E-commerce</span><span>UI/UX</span><span>Responsive</span><span>Frontend</span></div>
+            <button class="card-link" data-project-trigger="aleana">Ver proyecto <svg viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4L16.2 13H4v-2h12.2l-4.6-4.6z"/></svg></button>
           </div>
         </div>
 
@@ -525,12 +576,10 @@ spline-viewer.robot {
 
         <div class="project-modal-source" id="projectModalSource">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm2 8h-2v-6h2v6z" fill-rule="evenodd" clip-rule="evenodd"/></svg>
-          <p id="projectModalSourceText">¿Quieres descargar o ver este proyecto? Puedes verlo aquí en vivo o descargarlo. ¡Tú decides!</p>
+          <p id="projectModalSourceText">Accede a la aplicación interactiva:</p>
         </div>
 
         <div class="project-modal-actions" id="projectModalActions">
-          <a class="btn btn-solid" id="projectModalLiveLink" href="#" target="_blank" rel="noopener">Ver proyecto en vivo</a>
-          <a class="btn btn-outline" id="projectModalCodeLink" href="#" target="_blank" rel="noopener">Ver en línea/ Descargar</a>
         </div>
       </div>
     </div>
@@ -558,48 +607,85 @@ spline-viewer.robot {
 
   <!-- ==================== DATOS + LÓGICA DEL MODAL ==================== -->
   <script>
-    // Edita aquí la info de cada proyecto. "locked: true" = todavía no publicado (modal muestra
-    // mensaje de "sígueme en redes" en vez de los links de ver/descargar código).
     const PROJECTS = {
-      hydronex: {
-        title: "Hydronex — Prototipos RUNA",
+      tramites: {
+        title: "Trámites UPCH",
         status: "live",
-        image: "assets/img/fondo14.jpg",
-        tags: ["IoT", "Sensores", "Automatización", "Plataforma web", "Sostenibilidad"],
-        desc: "Sistema con sensores y tecnología de automatización que mide turbidez, pH y conductividad eléctrica del agua contaminada, dirige de forma inteligente su destino y gestiona los datos mediante una plataforma web que notifica al usuario. Desarrollado en equipo de 3 para promover la sostenibilidad frente a la escasez de agua potable en Villa María del Triunfo. Obtuvo el 3er puesto en Prototipos RUNA, organizado por el Vicerrectorado de Investigación de la UPCH.",
-        // TODO Yojan: reemplaza estos enlaces cuando los tengas listos.
-        liveUrl: "proyectos/hydronex.html",
-        codeUrl: "#",
-        locked: false
-      },
-      casino: {
-        title: "Casino entre Amigos",
-        status: "live",
-        image: "assets/img/fondop3.jpg",
-        tags: ["HTML", "CSS", "JavaScript", "localStorage"],
-        desc: "Una aplicación web para organizar noches de juego con amigos: registra jugadores, partidas y liquida automáticamente quién le debe a quién. Todo el estado se guarda en el navegador con localStorage, sin necesidad de servidor.",
-        liveUrl: "proyectos/casino.html",
-        codeUrl: "https://github.com/Alexander-Manosalva-Peralta/casino-entre-amigos",
+        image: "assets/img/tramites-upch.jpg",
+        tags: ["UI/UX", "MVP", "Human-Centered Design", "UPCH", "Web App"],
+        desc: "Proyecto en equipo desarrollado bajo la metodología Human-Centered Design (HCD) para la Universidad Peruana Cayetano Heredia (UPCH). Me encargué íntegramente de la arquitectura visual y del diseño del MVP: interfaz de usuario, flujo interactivo del estudiante y el asistente virtual Helpy Bot para la gestión y seguimiento ágil de trámites universitarios.",
+        url: "https://tramitesv2-0.onrender.com",
+        btnType: "online",
         locked: false
       },
       reproductor: {
         title: "Reproductor 3D — Composiciones IA",
         status: "live",
         image: "assets/img/fondoS.jpg",
-        tags: ["JavaScript", "CSS 3D", "Audio API"],
-        desc: "Interfaz inspirada en Apple Music/Spotify con un carrusel 3D, letras sincronizadas y reproductor propio para mis composiciones creadas con inteligencia artificial.",
-        liveUrl: "proyectos/reproductor.html",
-        codeUrl: "https://rereproductor3d.onrender.com",
+        tags: ["JavaScript", "CSS 3D", "Audio API", "Inteligencia Artificial"],
+        desc: "Interfaz interactiva inspirada en Apple Music y Spotify, construida con un carrusel 3D, letras sincronizadas en tiempo real y reproductor propio para mis composiciones musicales generadas con inteligencia artificial.",
+        url: "https://rereproductor3d.onrender.com/",
+        btnType: "online",
         locked: false
       },
-      portafolio: {
-        title: "Portafolio Web Interactivo",
+      casino: {
+        title: "Casino entre Amigos",
         status: "live",
-        image: "assets/img/fondo7.jpg",
-        tags: ["HTML", "CSS", "Spline 3D"],
-        desc: "Este mismo sitio: un portafolio con escenas 3D, animaciones al hacer scroll y un diseño responsivo construido completamente desde cero.",
-        liveUrl: "proyectos/portafolio.html",
-        codeUrl: "https://github.com/Alexander-Manosalva-Peralta/portafolio-web",
+        image: "assets/img/fondop4.jpg",
+        tags: ["JavaScript", "UI/UX", "localStorage", "Gestión de Saldo"],
+        desc: "Gestor de caja y liquidación de deudas para partidas de cartas entre amigos. Permite registrar jugadores, llevar historial de jugadas en tiempo real y calcular automáticamente los saldos pendientes sin necesidad de backend, persistiendo los datos con localStorage.",
+        url: "https://casino-entre-amigos-cvt8.onrender.com",
+        btnType: "online",
+        locked: false
+      },
+      hydronex: {
+        title: "Hydronex — Prototipos RUNA",
+        status: "live",
+        image: "assets/img/hydronex.png",
+        tags: ["IoT", "Sensores", "Automatización", "Sostenibilidad", "UPCH"],
+        desc: "Sistema con sensores y automatización que mide turbidez, pH y conductividad del agua contaminada, gestionando el destino del recurso y notificando mediante una plataforma web. Desarrollado en equipo para promover la sostenibilidad frente a la escasez de agua potable en Villa María del Triunfo. Obtuvimos con orgullo el 3er puesto en el Concurso de Prototipos Runayay Cayetano, organizado por el Vicerrectorado de Investigación de la UPCH.",
+        url: "proyectos/hydronex.html",
+        btnType: "live",
+        locked: false
+      },
+      bardos: {
+        title: "Mr. Bardos — E-commerce Gastronómico",
+        status: "live",
+        image: "assets/img/mr-bardos.jpg",
+        tags: ["E-commerce", "JavaScript", "WhatsApp API", "Responsive UI"],
+        desc: "Plataforma de comercio electrónico y catálogo digital para restaurante gastronómico artesanal. Integra catálogo interactivo con personalización de pedidos, carrito de compras dinámico y generación automática de la orden formateada directamente hacia WhatsApp para un cierre de venta ágil y directo.",
+        url: "https://mr-bardos.onrender.com/",
+        btnType: "online",
+        locked: false
+      },
+      redes: {
+        title: "Redes Neuronales — Métodos Numéricos",
+        status: "live",
+        image: "assets/img/redes-neuronales.jpg",
+        tags: ["Machine Learning", "Métodos Numéricos", "Data Science", "Python/Web"],
+        desc: "Plataforma interactiva de análisis y experimentación de entrenamiento de redes neuronales sobre datasets del mundo real (CDC Diabetes Indicators, California Housing, Forest Covertype y MNIST Digits) para el curso de Métodos Numéricos. Incluye visualización de convergencia, función de pérdida, métricas de precisión y análisis de funciones de activación.",
+        url: "https://redes-neuronales-rb2c.onrender.com/",
+        btnType: "online",
+        locked: false
+      },
+      netflix: {
+        title: "Netflix Prize — Sistema de Recomendación",
+        status: "live",
+        image: "assets/img/netflix-prize.jpg",
+        tags: ["Frontend UI", "Métodos Numéricos", "Matrix Factorization", "Data Viz"],
+        desc: "Sistema de recomendación algorítmico basado en el Netflix Prize Dataset utilizando métodos numéricos y factorización de matrices (SVD) para estimar las preferencias de los usuarios. Me encargué íntegramente de todo el desarrollo del frontend, reproduciendo la estética cinemática de Netflix junto con dashboards interactivos de métricas y gráficos para la exposición final.",
+        url: "https://m-todos-num-ricos-expo-final.onrender.com",
+        btnType: "online",
+        locked: false
+      },
+      aleana: {
+        title: "Aleana — E-commerce de Moda Femenina",
+        status: "live",
+        image: "assets/img/aleana.jpg",
+        tags: ["E-commerce", "UI/UX", "Responsive Design", "Frontend"],
+        desc: "Tienda online moderna y estilizada desarrollada para marca de moda femenina. Diseñada bajo una cuidada arquitectura comercial mobile-first orientada a la conversión, cuenta con catálogo dinámico de prendas, filtros intuitivos y una experiencia de compra fluida.",
+        url: "https://aleana.onrender.com",
+        btnType: "online",
         locked: false
       },
       chapatucombi: {
@@ -649,7 +735,7 @@ spline-viewer.robot {
       modalActions.innerHTML = "";
 
       if (p.locked) {
-        modalSourceText.textContent = "Este proyecto todavía no está publicado. Sígueme en mis redes para ser el primero en enterarte cuando salga, o vuelve a visitar mi perfil en unos días.";
+        modalSourceText.textContent = "Este proyecto todavía no está publicado. Sígueme en mis redes para enterarte apenas lo publique, o vuelve a visitar mi perfil en unos días.";
         const followBtn = document.createElement("a");
         followBtn.className = "btn btn-solid is-mystery-btn";
         followBtn.href = "#footer-social";
@@ -657,24 +743,22 @@ spline-viewer.robot {
         followBtn.addEventListener("click", closeProjectModal);
         modalActions.appendChild(followBtn);
       } else {
-        modalSourceText.textContent = "¿Quieres descargar o ver este proyecto? Puedes verlo aquí en vivo o descargarlo. ¡Tú decides!";
+        const actionBtn = document.createElement("a");
+        actionBtn.className = "btn btn-solid";
 
-        const liveBtn = document.createElement("a");
-        liveBtn.className = "btn btn-solid";
-        liveBtn.href = p.liveUrl;
-        liveBtn.target = "_blank";
-        liveBtn.rel = "noopener";
-        liveBtn.textContent = "Ver proyecto en vivo";
+        if (p.btnType === "live") {
+          modalSourceText.textContent = "Conoce a detalle la propuesta tecnológica y el prototipo galardonado:";
+          actionBtn.href = p.url;
+          actionBtn.textContent = "Ver proyecto en vivo";
+        } else {
+          modalSourceText.textContent = "Accede directamente a la aplicación interactiva desplegada en línea:";
+          actionBtn.href = p.url;
+          actionBtn.target = "_blank";
+          actionBtn.rel = "noopener";
+          actionBtn.textContent = "Ver proyecto en línea";
+        }
 
-        const codeBtn = document.createElement("a");
-        codeBtn.className = "btn btn-outline";
-        codeBtn.href = p.codeUrl;
-        codeBtn.target = "_blank";
-        codeBtn.rel = "noopener";
-        codeBtn.textContent = "Ver en línea/ Descargar";
-
-        modalActions.appendChild(liveBtn);
-        modalActions.appendChild(codeBtn);
+        modalActions.appendChild(actionBtn);
       }
 
       overlay.classList.add("is-open");

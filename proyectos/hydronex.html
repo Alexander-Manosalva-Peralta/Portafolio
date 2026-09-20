@@ -3,241 +3,658 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hydronex — Proyecto de Yojan Manosalva</title>
-  <meta name="description" content="Hydronex: sistema de sensores y automatización para medir turbidez, pH y conductividad del agua, con gestión mediante plataforma web. 3er puesto en Prototipos RUNA — UPCH." />
+  <title>HYDRONEX — Proyecto Galardonado | Yojan Manosalva</title>
+  <meta name="description" content="Hydronex: sistema de sensores y automatización para medir turbidez, pH y conductividad del agua. 3er puesto en el Concurso de Prototipos Runayay Cayetano — UPCH." />
 
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style/main.css" />
 
   <style>
-    body { background-color: #08080a; }
-
-    /* ==== FONDO DIFUMINADO ==== */
-    .hy-bg {
-      position: fixed; inset: 0; z-index: -2;
-      background: url('../assets/img/fondo16.jpg') center/cover no-repeat;
-      filter: blur(14px) brightness(0.55) saturate(1.05);
-      transform: scale(1.1);
-    }
-    .hy-bg::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(6,6,8,.55), rgba(6,6,8,.88) 60%, #08080a 100%);
+    :root {
+      --hy-cyan: #00e5ff;
+      --hy-teal: #48e5c2;
+      --hy-glow: rgba(0, 229, 255, 0.25);
+      --hy-border: rgba(255, 255, 255, 0.16);
     }
 
-    /* ==== HERO / PÍLDORA FLOTANTE ==== */
-    .hy-hero {
-      padding: calc(var(--nav-height) + 3.5rem) clamp(1.5rem, 6vw, 70px) 2.5rem;
-      display: flex; flex-direction: column; align-items: center; text-align: center;
+    body {
+      background-color: #0b0d11;
+      color: #eaeaea;
+      overflow-x: hidden;
     }
-    .hy-pill {
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 32px;
-      padding: 2.6rem clamp(1.6rem, 6vw, 4.5rem);
-      box-shadow: 0 25px 70px rgba(0,0,0,0.45);
-      max-width: 780px;
+
+    /* ==== FONDO AMBIENTAL FUTURISTA CURVO ==== */
+    .hy-bg-wrapper {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      pointer-events: none;
     }
-    .hy-pill p.eyebrow {
-      font-size: .8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--accent-2); margin-bottom: .9rem;
+
+    .hy-bg-gradient {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 18%, rgba(0, 229, 255, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 15% 45%, rgba(72, 229, 194, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 65%, rgba(0, 150, 255, 0.09) 0%, transparent 55%),
+        linear-gradient(180deg, #090a0d 0%, #0d1117 50%, #08090c 100%);
     }
-    .hy-pill h1 {
+
+    /* Formas suaves orgánicas que evocan las curvas de la imagen */
+    .hy-ambient-wave {
+      position: absolute;
+      width: 140vw;
+      height: 70vh;
+      top: -15vh;
+      left: -20vw;
+      background: radial-gradient(ellipse at center, rgba(235, 244, 255, 0.06) 0%, transparent 70%);
+      filter: blur(60px);
+      border-radius: 50%;
+    }
+
+    /* ==== BOTÓN FLOTANTE REGRESAR ==== */
+    .hy-back-nav {
+      position: fixed;
+      top: 1.2rem;
+      left: 1.5rem;
+      z-index: 110;
+    }
+
+    /* ==== HERO SHOWCASE ==== */
+    .hy-hero-section {
+      padding: calc(var(--nav-height) + 2rem) clamp(1.5rem, 6vw, 70px) 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hy-award-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 30px;
+      background: rgba(255, 215, 0, 0.12);
+      border: 1px solid rgba(255, 215, 0, 0.45);
+      color: #ffd700;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+      margin-bottom: 1.4rem;
+      animation: awardGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes awardGlow {
+      from { box-shadow: 0 0 15px rgba(255, 215, 0, 0.15); }
+      to { box-shadow: 0 0 30px rgba(255, 215, 0, 0.4); }
+    }
+
+    .hy-title-main {
       font-family: 'Inter', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2.6rem, 8vw, 5rem);
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #ffffff, var(--accent-2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .hy-pill p.tagline {
-      margin-top: 1rem; color: #e2e2e2; font-size: 1.02rem; line-height: 1.7; max-width: 560px; margin-inline: auto;
+      font-size: clamp(3rem, 9vw, 6.2rem);
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin: 0 0 0.8rem;
+      background: linear-gradient(135deg, #ffffff 0%, #e0e8f0 45%, var(--hy-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .hy-badges { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; margin-top: 1.6rem; }
-    .hy-badges span {
-      font-size: .78rem; font-weight: 700; letter-spacing: .4px;
-      padding: .45rem .95rem; border-radius: 20px;
-      background: rgba(255,94,87,0.14); border: 1px solid rgba(255,94,87,0.35); color: var(--accent-2);
+    .hy-subtitle {
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      color: #c9d1d9;
+      max-width: 720px;
+      line-height: 1.6;
+      margin: 0 auto 1.8rem;
+      font-weight: 400;
+    }
+
+    .hy-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 2.8rem;
+    }
+
+    .hy-tag-pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 0.4rem 0.95rem;
+      border-radius: 20px;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.28);
+      color: #8be9fd;
+    }
+
+    /* ==== RENDER SHOWCASE CARD (FUTURISTA ESTILO IMAGEN) ==== */
+    .hy-render-stage {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto 3.5rem;
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 229, 255, 0.18);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(200, 210, 225, 0.03) 100%);
+      backdrop-filter: blur(20px);
+    }
+
+    .hy-render-stage img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease);
+    }
+
+    .hy-render-stage:hover img {
+      transform: scale(1.02);
+    }
+
+    .hy-render-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.4rem 2rem;
+      background: linear-gradient(180deg, transparent 0%, rgba(8, 10, 14, 0.92) 80%);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hy-render-caption p {
+      font-size: 0.9rem;
+      color: #e6edf3;
+      margin: 0;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hy-render-caption p::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--hy-cyan);
+      box-shadow: 0 0 10px var(--hy-cyan);
+    }
+
+    .hy-render-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--hy-cyan);
+      background: rgba(0, 229, 255, 0.12);
+      padding: 0.35rem 0.8rem;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 229, 255, 0.3);
     }
 
     /* ==== BENTO GRID ==== */
-    .hy-grid {
-      max-width: 1200px; margin: 0 auto;
-      padding: 1rem clamp(1.5rem, 6vw, 70px) 5rem;
+    .hy-bento-grid {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 6vw, 70px) 5rem;
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 1.4rem;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+      position: relative;
+      z-index: 2;
     }
 
-    .hy-panel {
-      background: rgba(255,255,255,0.055);
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255,255,255,0.13);
-      border-radius: 22px;
-      padding: 2rem;
+    .hy-card {
+      background: rgba(255, 255, 255, 0.045);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--hy-border);
+      border-radius: 24px;
+      padding: 2.2rem;
       transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      display: flex;
+      flex-direction: column;
     }
-    .hy-panel:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.26); box-shadow: 0 16px 40px rgba(0,0,0,0.35); }
 
-    .hy-panel .panel-eyebrow {
-      font-size: .74rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--accent-2); margin-bottom: .7rem; display: flex; align-items: center; gap: .5rem;
+    .hy-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0, 229, 255, 0.4);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45), 0 0 25px rgba(0, 229, 255, 0.12);
     }
-    .hy-panel .panel-eyebrow svg { width: 15px; height: 15px; fill: none; stroke: var(--accent-2); stroke-width: 1.8; }
-    .hy-panel h2 { font-size: 1.25rem; margin-bottom: .8rem; color: #fff; }
-    .hy-panel p { color: var(--text-muted); font-size: .95rem; line-height: 1.75; }
-    .hy-panel p + p { margin-top: .8rem; }
 
-    .span-4 { grid-column: span 4; }
-    .span-2 { grid-column: span 2; }
-    .span-3 { grid-column: span 3; }
-    .span-6 { grid-column: span 6; }
+    .col-12 { grid-column: span 12; }
+    .col-8  { grid-column: span 8; }
+    .col-7  { grid-column: span 7; }
+    .col-6  { grid-column: span 6; }
+    .col-5  { grid-column: span 5; }
+    .col-4  { grid-column: span 4; }
 
-    /* Panel de desarrollo con "stat" destacado */
-    .hy-stat { display: flex; align-items: baseline; gap: .5rem; margin: .6rem 0 1rem; }
-    .hy-stat strong { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: #fff; }
-    .hy-stat span { color: var(--text-dim); font-size: .85rem; }
-
-    /* Panel de diseño en campo / imagen */
-    .hy-field-img {
-      border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.14);
-      aspect-ratio: 16/9; margin-bottom: 1rem;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(255,255,255,0.04);
+    .hy-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
     }
-    .hy-field-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .hy-field-img.is-placeholder { flex-direction: column; gap: .5rem; color: var(--text-dim); font-size: .85rem; text-align: center; padding: 1rem; }
-    .hy-field-img.is-placeholder svg { width: 34px; height: 34px; fill: none; stroke: var(--text-dim); stroke-width: 1.4; }
+
+    .hy-card-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba(0, 229, 255, 0.12);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--hy-cyan);
+      flex-shrink: 0;
+    }
+
+    .hy-card-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    .hy-card-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--hy-cyan);
+    }
+
+    .hy-card h3 {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    .hy-card p {
+      color: #c0c6d0;
+      font-size: 0.96rem;
+      line-height: 1.75;
+      margin-bottom: 0.8rem;
+    }
+
+    .hy-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Lista de especificaciones técnicas */
+    .hy-spec-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+
+    .hy-spec-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.9rem;
+      color: #d1d5db;
+    }
+
+    .hy-spec-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--hy-teal);
+      box-shadow: 0 0 8px var(--hy-teal);
+      flex-shrink: 0;
+    }
+
+    /* Certificado / Constancia oficial */
+    .hy-cert-wrapper {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      margin-top: 1.2rem;
+      background: #000;
+    }
+
+    .hy-cert-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .hy-cert-wrapper:hover img {
+      transform: scale(1.03);
+    }
+
+    .hy-cert-caption {
+      padding: 0.8rem 1rem;
+      background: rgba(15, 17, 22, 0.95);
+      font-size: 0.82rem;
+      color: #ffd700;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
     /* Colaboradores */
-    .hy-team { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; margin-top: .4rem; }
-    .hy-member {
-      display: flex; gap: 1rem; align-items: flex-start;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      padding: 1.1rem 1.2rem;
-    }
-    .hy-avatar {
-      width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem;
-      background: var(--accent-gradient); color: #1a0a08;
-    }
-    .hy-member h4 { font-size: .98rem; margin-bottom: .3rem; color: #fff; }
-    .hy-member p { color: var(--text-muted); font-size: .84rem; line-height: 1.55; }
-
-    /* CTA final */
-    .hy-cta {
-      max-width: 1200px; margin: 0 auto;
-      padding: 0 clamp(1.5rem, 6vw, 70px) 6rem;
-      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    .hy-team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.2rem;
     }
 
-    @media (max-width: 860px) {
-      .span-4, .span-3, .span-2 { grid-column: span 6; }
+    .hy-member-box {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 1.2rem 1.3rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .hy-member-box:hover {
+      border-color: rgba(0, 229, 255, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .hy-member-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(72, 229, 194, 0.25));
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .hy-member-info h4 {
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .hy-member-role {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--hy-cyan);
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .hy-member-info p {
+      font-size: 0.83rem;
+      color: #aab2bf;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ==== CTA DE NAVEGACIÓN LIMPIO ==== */
+    .hy-cta-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem clamp(1.5rem, 6vw, 70px) 6rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hy-cta-box {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--hy-border);
+      border-radius: 28px;
+      padding: 2.8rem 2rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .hy-cta-box h3 {
+      font-size: 1.7rem;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+
+    .hy-cta-box p {
+      color: #b0b7c3;
+      font-size: 0.95rem;
+      max-width: 540px;
+      margin: 0 auto 1.8rem;
+    }
+
+    .hy-cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 960px) {
+      .col-8, .col-7, .col-6, .col-5, .col-4 {
+        grid-column: span 12;
+      }
+      .hy-render-caption {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="hy-bg"></div>
+  <!-- FONDO AMBIENTAL -->
+  <div class="hy-bg-wrapper">
+    <div class="hy-bg-gradient"></div>
+    <div class="hy-ambient-wave"></div>
+  </div>
 
-  <a href="../projects.html" class="btn-back" data-go-back>
-    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l4.88-4.88L11.29 4.7 3.29 12.7l8 8 1.42-1.42L7.83 13H20z"/></svg>
-    Volver a proyectos
-  </a>
+  <!-- NAVBAR COMPLETA -->
+  <nav class="site-nav">
+    <a href="../index.html" class="nav-brand">
+      <div class="nav-brand-avatar">
+        <img src="../assets/img/favicon.png" alt="Logo de Yojan">
+      </div>
+      <div class="nav-brand-text">
+        <span class="nav-brand-title">Yojan</span>
+        <span class="nav-brand-badge">Portafolio</span>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menú"><span></span></button>
+    <ul class="nav-links">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="../about.html">Sobre mí</a></li>
+      <li><a href="../projects.html" class="is-active">Proyectos</a></li>
+      <li><a href="../contact.html">Contacto</a></li>
+    </ul>
+  </nav>
 
-  <!-- HERO -->
-  <section class="hy-hero">
-    <div class="hy-pill" data-reveal="zoom">
-      <p class="eyebrow">Proyecto universitario · Prototipos RUNA</p>
-      <h1>HYDRONEX</h1>
-      <p class="tagline">Sistema avanzado basado en sensores y tecnología de automatización.</p>
-      <div class="hy-badges">
-        <span>🏆 3er puesto</span>
-        <span>UPCH · Vicerrectorado de Investigación</span>
-        <span>Villa María del Triunfo</span>
-        <span>2024</span>
+  <!-- HERO SECTION CON PROTAGONISMO DEL RENDER -->
+  <section class="hy-hero-section">
+    <div class="hy-award-badge" data-reveal="zoom">
+      🏆 3er Lugar · Concurso Prototipos Runayay Cayetano
+    </div>
+
+    <h1 class="hy-title-main" data-reveal="up" style="--reveal-delay:80ms">HYDRONEX</h1>
+
+    <p class="hy-subtitle" data-reveal="up" style="--reveal-delay:160ms">
+      Sistema avanzado con sensores IoT y automatización inteligente para el tratamiento, clasificación y gestión sustentable de agua contaminada.
+    </p>
+
+    <div class="hy-tag-row" data-reveal="up" style="--reveal-delay:220ms">
+      <span class="hy-tag-pill">UPCH · Vicerrectorado de Investigación</span>
+      <span class="hy-tag-pill">IoT & Sensores</span>
+      <span class="hy-tag-pill">Automatización Hidráulica</span>
+      <span class="hy-tag-pill">Plataforma Web de Telemetría</span>
+      <span class="hy-tag-pill">Villa María del Triunfo</span>
+    </div>
+
+    <!-- ESCENARIO DEL RENDER 3D SUMINISTRADO -->
+    <div class="hy-render-stage" data-reveal="zoom" style="--reveal-delay:280ms">
+      <img src="../assets/img/hydronex.png" alt="Prototipo 3D y Cápsula de Tratamiento Hydronex">
+      <div class="hy-render-caption">
+        <p>Prototipo Conceptual de la Unidad Automatizada de Tratamiento Hydronex</p>
+        <span class="hy-render-badge">Prototipos RUNA · UPCH</span>
       </div>
     </div>
   </section>
 
-  <!-- BENTO GRID -->
-  <div class="hy-grid">
+  <!-- BENTO GRID DE DETALLES DEL PROYECTO -->
+  <div class="hy-bento-grid">
 
-    <div class="hy-panel span-4" data-reveal="up">
-      <p class="panel-eyebrow">
-        <svg viewBox="0 0 24 24"><path d="M12 2s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z"/></svg>
-        Descripción
-      </p>
-      <h2>Agua monitoreada y gestionada de forma inteligente</h2>
-      <p>Se propone implementar un sistema avanzado basado en sensores y tecnologías de automatización. Este sistema mide los parámetros de turbidez, pH y conductividad eléctrica del agua contaminada, dirige de manera inteligente su destino y, con la ayuda de una plataforma web, gestiona los datos y notifica al usuario.</p>
-    </div>
-
-    <div class="hy-panel span-2" data-reveal="up" style="--reveal-delay:80ms">
-      <p class="panel-eyebrow">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-        ¿Cuál es la intención?
-      </p>
-      <p>Promover la sostenibilidad frente a la escasez de agua potable en el distrito de Villa María del Triunfo.</p>
-    </div>
-
-    <div class="hy-panel span-2" data-reveal="up">
-      <p class="panel-eyebrow">
-        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
-        Desarrollo
-      </p>
-      <div class="hy-stat"><strong>2</strong><span>meses de elaboración</span></div>
-      <p>El proyecto se desarrolló a inicios del año 2024.</p>
-    </div>
-
-    <!-- DISEÑO EN CAMPO -->
-    <div class="hy-panel span-4" data-reveal="up" style="--reveal-delay:80ms">
-      <p class="panel-eyebrow">
-        <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg>
-        Diseño en campo
-      </p>
-      <!--
-        Nota para Yojan: reemplaza este bloque cuando tengas el plano/foto de campo.
-        <div class="hy-field-img"><img src="../assets/img/hydronex-plano.jpg" alt="Plano de campo de Hydronex"></div>
-      -->
-      <div class="hy-field-img is-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5-11 11"/></svg>
-        Aquí va el plano/foto de campo — súbelo a assets/img/
+    <!-- DESCRIPCIÓN TÉCNICA -->
+    <div class="hy-card col-7" data-reveal="up">
+      <div class="hy-card-header">
+        <div class="hy-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        </div>
+        <span class="hy-card-eyebrow">Solución Tecnológica</span>
       </div>
-      <p>Plano detallado que ilustra el funcionamiento integral del proyecto, proporcionando una visión clara y comprensible de su implementación en el entorno necesario. Este plano actúa como guía fundamental para visualizar el proyecto en su totalidad, facilitando su ejecución y comprensión.</p>
+      <h3>Monitoreo y Automatización Inteligente</h3>
+      <p>
+        Hydronex integra una red de sensores de alta precisión diseñados para medir en tiempo real los parámetros críticos de <strong>turbidez, pH y conductividad eléctrica</strong> en fuentes de agua residual y pluvial.
+      </p>
+      <p>
+        Mediante un controlador electrónico programado, el sistema toma decisiones automatizadas sobre las válvulas y conductos de purificación, dirigiendo el recurso hacia filtrado secundario o almacenamiento según la calidad registrada.
+      </p>
+      <ul class="hy-spec-list">
+        <li class="hy-spec-item"><span class="hy-spec-dot"></span> Calibración continua de sensores fisicoquímicos</li>
+        <li class="hy-spec-item"><span class="hy-spec-dot"></span> Desvío automático según umbrales de potabilidad y salubridad</li>
+        <li class="hy-spec-item"><span class="hy-spec-dot"></span> Alertas tempranas de contaminación o saturación de filtros</li>
+      </ul>
     </div>
 
-    <!-- COLABORADORES -->
-    <div class="hy-panel span-6" data-reveal="up">
-      <p class="panel-eyebrow">
-        <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.4"/><path d="M15 20c.3-2.4 2-4.4 4-4.9"/></svg>
-        Información detallada · Colaboradores
+    <!-- IMPACTO Y CONTEXTO -->
+    <div class="hy-card col-5" data-reveal="up" style="--reveal-delay:80ms">
+      <div class="hy-card-header">
+        <div class="hy-card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <span class="hy-card-eyebrow">Impacto Social</span>
+      </div>
+      <h3>Resiliencia Hídrica en VMT</h3>
+      <p>
+        El proyecto fue concebido para mitigar la severa escasez de agua potable que sufren las familias en las zonas altas del distrito de <strong>Villa María del Triunfo (Lima, Perú)</strong>.
       </p>
-      <div class="hy-team">
-        <div class="hy-member">
-          <div class="hy-avatar">LA</div>
-          <div>
+      <p>
+        Permite maximizar el aprovechamiento de aguas grises y condensadas, asegurando que cada litro cumpla con los estándares sanitarios requeridos para riego sustentable y saneamiento doméstico.
+      </p>
+    </div>
+
+    <!-- RECONOCIMIENTO / CONSTANCIA OFICIAL -->
+    <div class="hy-card col-6" data-reveal="up">
+      <div class="hy-card-header">
+        <div class="hy-card-icon" style="background: rgba(255,215,0,0.15); border-color: rgba(255,215,0,0.4); color: #ffd700;">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <span class="hy-card-eyebrow" style="color:#ffd700;">Galardón Académico Oficial</span>
+      </div>
+      <h3>Tercer Lugar · Prototipos Runayay Cayetano</h3>
+      <p>
+        En la Segunda Edición del Concurso de Prototipos <em>"Runayay Cayetano"</em>, organizado por el <strong>Vicerrectorado de Investigación y la Dirección Universitaria de Innovación y Emprendimiento de la UPCH</strong>, nuestro equipo obtuvo el reconocimiento de 3er puesto entre decenas de proyectos de ingeniería e investigación.
+      </p>
+      <div class="hy-cert-wrapper">
+        <img src="../assets/img/cayetano.jpg" alt="Constancia oficial del 3er Lugar UPCH Runayay Cayetano">
+        <div class="hy-cert-caption">
+          <span>Constancia de Reconocimiento UPCH</span>
+          <span>11 de Diciembre, 2024</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLATAFORMA WEB & TELEMETRÍA -->
+    <div class="hy-card col-6" data-reveal="up" style="--reveal-delay:80ms">
+      <div class="hy-card-header">
+        <div class="hy-card-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <span class="hy-card-eyebrow">Mi Contribución Técnica</span>
+      </div>
+      <h3>Plataforma Web y Sistema de Notificaciones</h3>
+      <p>
+        Como integrante del equipo, me responsabilicé del desarrollo de la <strong>plataforma web de telemetría y gestión de datos</strong>.
+      </p>
+      <p>
+        La aplicación recibe las lecturas de los sensores en la nube, grafica las variaciones de calidad en tiempo real y dispara notificaciones inmediatas a los usuarios responsables cuando los parámetros se desvían de los rangos seguros.
+      </p>
+      <ul class="hy-spec-list">
+        <li class="hy-spec-item"><span class="hy-spec-dot"></span> Panel de control responsivo para consulta histórica</li>
+        <li class="hy-spec-item"><span class="hy-spec-dot"></span> Pipeline de ingesta y visualización de datos de sensores</li>
+        <li class="hy-spec-item"><span class="hy-spec-dot"></span> Alertas instantáneas y reportes de consumo eficiente</li>
+      </ul>
+    </div>
+
+    <!-- EQUIPO COLABORADOR -->
+    <div class="hy-card col-12" data-reveal="up">
+      <div class="hy-card-header">
+        <div class="hy-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <span class="hy-card-eyebrow">Equipo Multidisciplinario</span>
+      </div>
+      <h3>Investigación y Desarrollo Colaborativo</h3>
+      <p>
+        Hydronex es fruto del trabajo conjunto de estudiantes de ingeniería de la Universidad Peruana Cayetano Heredia, uniendo investigación científica, electrónica aplicada y desarrollo de software.
+      </p>
+
+      <div class="hy-team-grid">
+        <div class="hy-member-box">
+          <div class="hy-member-avatar">LA</div>
+          <div class="hy-member-info">
             <h4>Lizbeth Antay</h4>
-            <p>Coordinadora de investigación, responsable de la búsqueda de artículos científicos apropiados para el desarrollo del proyecto.</p>
+            <span class="hy-member-role">Investigación & Metodología</span>
+            <p>Búsqueda y análisis de literatura científica especializada, validación de parámetros sanitarios y sustento metodológico del proyecto.</p>
           </div>
         </div>
-        <div class="hy-member">
-          <div class="hy-avatar">IH</div>
-          <div>
+
+        <div class="hy-member-box">
+          <div class="hy-member-avatar">IH</div>
+          <div class="hy-member-info">
             <h4>Ibet Huamany</h4>
-            <p>Coordinadora de prototipado eléctrico, responsable de la programación de datos y de la parte electrónica del sistema.</p>
+            <span class="hy-member-role">Electrónica & Hardware</span>
+            <p>Diseño y ensamblaje del circuito electrónico, calibración de sensores fisicoquímicos y programación del controlador de automatización.</p>
           </div>
         </div>
-        <div class="hy-member">
-          <div class="hy-avatar">YM</div>
-          <div>
+
+        <div class="hy-member-box">
+          <div class="hy-member-avatar" style="border-color: var(--accent); color: var(--accent);">YM</div>
+          <div class="hy-member-info">
             <h4>Yojan Manosalva</h4>
-            <p>Responsable de la plataforma web: gestión de datos y notificaciones del sistema. <em>(Edítalo si tu rol fue otro.)</em></p>
+            <span class="hy-member-role">Software & Plataforma Web</span>
+            <p>Arquitectura de interfaz web, módulo de telemetría en tiempo real, gestión de base de datos y sistema automatizado de notificaciones al usuario.</p>
           </div>
         </div>
       </div>
@@ -245,13 +662,21 @@
 
   </div>
 
-  <!-- CTA -->
-  <div class="hy-cta" data-reveal="up">
-    <!-- TODO Yojan: coloca aquí el enlace real cuando lo tengas -->
-    <a class="btn btn-solid" href="#" target="_blank" rel="noopener">Ver proyecto en vivo</a>
-    <a class="btn btn-outline" href="#" target="_blank" rel="noopener">Ver en línea / Descargar</a>
-    <a class="btn btn-ghost" href="../about.html#logros">Ver constancia del 3er puesto</a>
-  </div>
+  <!-- NAVEGACIÓN LIMPIA DE RETORNO -->
+  <section class="hy-cta-section" data-reveal="up">
+    <div class="hy-cta-box">
+      <h3>Explora más proyectos</h3>
+      <p>Descubre el resto de aplicaciones interactivas, herramientas y plataformas desplegadas en mi portafolio.</p>
+      <div class="hy-cta-buttons">
+        <a class="btn btn-solid" href="../projects.html">← Volver a proyectos</a>
+        <a class="btn btn-outline" href="../about.html#logros">Ver certificaciones y reconocimientos</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" style="position:relative; z-index:2;">
+    <p>© 2026 Yojan Manosalva · Todos los derechos reservados</p>
+  </footer>
 
   <script src="../scripts/main.js"></script>
 </body>
